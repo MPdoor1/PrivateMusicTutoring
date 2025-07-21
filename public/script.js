@@ -568,11 +568,11 @@ function generateTimeSlots() {
         '<div class="timezone-info">🕐 You\'re in Eastern Time - same as Jacksonville, FL!</div>' :
         `<div class="timezone-info">🕐 Times shown in your timezone (${getUserTimezoneDisplay()}). Jacksonville, FL times shown in EST.</div>`;
     
-    // Business hours: 10 AM to 2:30 PM EST, then 6 PM to 9 PM EST, 30-minute slots
+    // Business hours: 9 AM to 2:30 PM EST, then 3 PM to 9 PM EST, 30-minute slots
     const timeSlots = [];
     
-    // Morning/Afternoon slots: 10 AM to 2:30 PM
-    for (let hour = 10; hour <= 14; hour++) {
+    // Morning/Afternoon slots: 9 AM to 2:30 PM
+    for (let hour = 9; hour <= 14; hour++) {
         for (let minute = 0; minute < 60; minute += 30) {
             // Stop at 2:30 PM (14:30)
             if (hour === 14 && minute > 30) break;
@@ -607,8 +607,8 @@ function generateTimeSlots() {
         }
     }
     
-    // Evening slots: 6 PM to 9 PM
-    for (let hour = 18; hour <= 21; hour++) {
+    // Afternoon/Evening slots: 3 PM to 9 PM
+    for (let hour = 15; hour <= 21; hour++) {
         for (let minute = 0; minute < 60; minute += 30) {
             // Stop at 9 PM (21:00)
             if (hour === 21 && minute > 0) break;
