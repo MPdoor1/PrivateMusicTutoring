@@ -442,11 +442,22 @@ function openBookingModal() {
     // Initialize Stripe Elements if not already done
     initializeStripeElements();
     
-    // Set up service type change listener
+    // Set up service type change listener (remove any existing listeners first)
     const serviceTypeSelect = document.getElementById('instrument');
     if (serviceTypeSelect) {
+        // Remove any existing event listeners
+        serviceTypeSelect.removeEventListener('change', updatePaymentAmount);
+        // Add the event listener
         serviceTypeSelect.addEventListener('change', updatePaymentAmount);
+        console.log('Added change listener to instrument select');
+    } else {
+        console.log('Could not find instrument select element');
     }
+    
+    // Call updatePaymentAmount initially to set default values
+    setTimeout(() => {
+        updatePaymentAmount();
+    }, 100);
     
     // Set up promo code functionality
     const applyPromoCodeButton = document.getElementById('applyPromoCode');
