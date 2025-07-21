@@ -39,10 +39,11 @@ jobs:
           # Copy static files for GitHub Pages deployment
           mkdir -p _site
           cp -r public/* _site/
-          cp package.json _site/
-          cp server.js _site/
-          # Create a simple index redirect for GitHub Pages
-          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=./public/index.html"></head><body></body></html>' > _site/index.html
+          cp index.html _site/
+          cp README.md _site/
+          cp GITHUB_PAGES_SETUP.md _site/
+          # Copy documentation files
+          cp *.md _site/ 2>/dev/null || true
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
