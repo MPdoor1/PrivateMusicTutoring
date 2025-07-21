@@ -568,10 +568,51 @@ function generateTimeSlots() {
         '<div class="timezone-info">🕐 You\'re in Eastern Time - same as Jacksonville, FL!</div>' :
         `<div class="timezone-info">🕐 Times shown in your timezone (${getUserTimezoneDisplay()}). Jacksonville, FL times shown in EST.</div>`;
     
-    // Business hours: 8 AM to 8 PM EST, 30-minute slots
+    // Business hours: 10 AM to 2:30 PM EST, then 6 PM to 9 PM EST, 30-minute slots
     const timeSlots = [];
-    for (let hour = 8; hour <= 19; hour++) {
+    
+    // Morning/Afternoon slots: 10 AM to 2:30 PM
+    for (let hour = 10; hour <= 14; hour++) {
         for (let minute = 0; minute < 60; minute += 30) {
+            // Stop at 2:30 PM (14:30)
+            if (hour === 14 && minute > 30) break;
+            
+            const estTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            
+            // Convert EST to user's timezone for display
+            const userTimeSlot = convertFromEST(selectedDate, estTime);
+            const userHour = parseInt(userTimeSlot.time.split(':')[0]);
+            const userMinute = parseInt(userTimeSlot.time.split(':')[1]);
+            
+            // Skip if converted time is outside reasonable hours (e.g., 2 AM)
+            if (userHour < 6 || userHour > 23) continue;
+            
+            const displayTime = isEasternTime ? 
+                formatTimeWithTimezone(hour, minute, true) :
+                formatTimeWithTimezone(userHour, userMinute, false);
+            
+            const estDisplay = isEasternTime ? '' : ` (${formatTimeWithTimezone(hour, minute, true)})`;
+            
+            // Check if slot is already booked (using EST time for consistency)
+            const isBooked = bookings.some(booking => 
+                booking.date === selectedDate && booking.time === estTime
+            );
+            
+            timeSlots.push({
+                time: estTime, // Always store EST time
+                userTime: userTimeSlot.time, // User's local time
+                display: displayTime + estDisplay,
+                booked: isBooked
+            });
+        }
+    }
+    
+    // Evening slots: 6 PM to 9 PM
+    for (let hour = 18; hour <= 21; hour++) {
+        for (let minute = 0; minute < 60; minute += 30) {
+            // Stop at 9 PM (21:00)
+            if (hour === 21 && minute > 0) break;
+            
             const estTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
             
             // Convert EST to user's timezone for display
