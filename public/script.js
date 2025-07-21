@@ -200,7 +200,8 @@ let promoCodeDiscount = 0;
 
 function updatePaymentAmount() {
     console.log('updatePaymentAmount called');
-    const serviceType = document.getElementById('instrument').value;
+    const serviceTypeElement = document.getElementById('instrument');
+    const serviceType = serviceTypeElement ? serviceTypeElement.value : '';
     const paymentAmount = document.getElementById('paymentAmount');
     const paymentSubtotal = document.getElementById('paymentSubtotal');
     const discountLine = document.getElementById('discountLine');
@@ -208,11 +209,18 @@ function updatePaymentAmount() {
     
     console.log('Service type:', serviceType);
     console.log('Payment elements found:', {
+        serviceTypeElement: !!serviceTypeElement,
         paymentAmount: !!paymentAmount,
         paymentSubtotal: !!paymentSubtotal,
         discountLine: !!discountLine,
         discountAmount: !!discountAmount
     });
+    
+    // Check if essential elements exist
+    if (!paymentAmount || !paymentSubtotal) {
+        console.log('❌ Payment elements not found - modal might not be ready yet');
+        return;
+    }
     
     if (serviceType && serviceOptions[serviceType]) {
         const originalPrice = serviceOptions[serviceType].price;
@@ -463,26 +471,32 @@ function openBookingModal() {
     // Initialize Stripe Elements if not already done
     initializeStripeElements();
     
-    // Set up service type change listener (remove any existing listeners first)
-    const serviceTypeSelect = document.getElementById('instrument');
-    if (serviceTypeSelect) {
-        // Remove any existing event listeners
-        serviceTypeSelect.removeEventListener('change', updatePaymentAmount);
-        // Add the event listener
-        serviceTypeSelect.addEventListener('change', function() {
-            console.log('🔄 Lesson type changed! Updating payment...');
-            updatePaymentAmount();
-        });
-        console.log('✅ Added change listener to instrument select');
-    } else {
-        console.log('Could not find instrument select element');
-    }
-    
-    // Force update payment amount multiple times to ensure it works
-    updatePaymentAmount(); // Call immediately
+    // Set up service type change listener with improved timing
     setTimeout(() => {
-        updatePaymentAmount(); // Call after 100ms
-        console.log('Payment update called from timeout');
+        const serviceTypeSelect = document.getElementById('instrument');
+        if (serviceTypeSelect) {
+            // Remove any existing event listeners
+            serviceTypeSelect.removeEventListener('change', updatePaymentAmount);
+            // Add the event listener
+            serviceTypeSelect.addEventListener('change', function() {
+                console.log('🔄 Lesson type changed! Updating payment...');
+                // Small delay to ensure DOM is ready
+                setTimeout(() => {
+                    updatePaymentAmount();
+                }, 10);
+            });
+            console.log('✅ Added change listener to instrument select');
+            
+            // Update payment amount immediately if there's already a selection
+            if (serviceTypeSelect.value) {
+                updatePaymentAmount();
+            }
+        } else {
+            console.log('❌ Could not find instrument select element');
+        }
+        
+        // Force initial update
+        updatePaymentAmount();
     }, 100);
     setTimeout(() => {
         updatePaymentAmount(); // Call after 500ms
@@ -1075,6 +1089,18 @@ document.addEventListener('DOMContentLoaded', function() {
         dateInput.addEventListener('change', generateTimeSlots);
         // Also call it initially to show initial state
         generateTimeSlots();
+    }
+    
+    // Set up backup service type change listener
+    const instrumentSelect = document.getElementById('instrument');
+    if (instrumentSelect) {
+        instrumentSelect.addEventListener('change', function() {
+            console.log('🔄 Backup listener: Lesson type changed!');
+            setTimeout(() => {
+                updatePaymentAmount();
+            }, 10);
+        });
+        console.log('✅ Backup change listener added to instrument select');
     }
     
     // Email management functions (made global for onclick handlers)
