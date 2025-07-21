@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Music Tutoring</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="MusicTutoringFavicon.jpg">
+    <link rel="shortcut icon" href="MusicTutoringFavicon.jpg">
+    <link rel="apple-touch-icon" href="MusicTutoringFavicon.jpg">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <h1 class="logo">
+                    <img src="MusicTutoringFavicon.jpg" alt="Private Music Tutoring" width="32" height="32" class="logo-icon">
+                    Music Tutoring
+                </h1>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" onclick="openBookingModal()" class="book-meeting-btn">Book Lesson</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Professional Private Music Tutoring</h2>
+                <p>More <strong>Personalized</strong>, More <strong>Flexible</strong>, and <strong>Effective</strong> than group lessons</p>
+                <div class="selling-points">
+                    <div class="selling-point">
+                        <span class="icon">🎵</span>
+                        <h3>Personalized</h3>
+                        <p>Tailored lessons for your musical style & skill level</p>
+                    </div>
+                    <div class="selling-point">
+                        <span class="icon">🏠</span>
+                        <h3>Flexible</h3>
+                        <p>Online or in-person - learn from anywhere</p>
+                    </div>
+                    <div class="selling-point">
+                        <span class="icon">🚀</span>
+                        <h3>Effective</h3>
+                        <p>One-on-one attention for faster progress</p>
+                    </div>
+                </div>
+                <button class="cta-button" onclick="openBookingModal()">Book Lesson</button>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <h2>How It Works</h2>
+                <p class="section-subtitle">Start your musical journey in 3 simple steps</p>
+                <div class="slider-container">
+                    <div class="slider-track">
+                        <div class="slide active">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Book Your Lesson</h3>
+                                <p>Choose your instrument and preferred lesson time. Available for all skill levels from beginner to advanced.</p>
+                                <div class="step-icon">📅</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Join Your Session</h3>
+                                <p>Connect via Zoom or meet in person at the scheduled time. Receive your lesson materials and sheet music.</p>
+                                <div class="step-icon">🎹</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Practice & Progress</h3>
+                                <p>Get personalized practice assignments and track your musical progress with dedicated support.</p>
+                                <div class="step-icon">✨</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-progress"></div>
+                    <div class="slider-dots">
+                        <span class="dot active" data-slide="0"></span>
+                        <span class="dot" data-slide="1"></span>
+                        <span class="dot" data-slide="2"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <h2>Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>Instrument Lessons</h3>
+                        <p>Private lessons for piano, guitar, violin, drums, and more</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Music Theory</h3>
+                        <p>Learn music notation, ear training, and composition</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Performance Coaching</h3>
+                        <p>Prepare for recitals, auditions, and stage performances</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Music History</h3>
+                        <p>Explore the history of music and its impact on culture</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Music Technology</h3>
+                        <p>Introduction to music software and production</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Music Business</h3>
+                        <p>Understanding the music industry and career options</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2>What Our Students Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"My daughter absolutely loves her piano lessons with Ms. Smith! She's made incredible progress in just a few months."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <span>Piano Student</span>
+                            </div>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"I've been taking guitar lessons with Mr. Lee for over a year and my skills have improved dramatically. He's incredibly patient and knowledgeable."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Michael Chen</h4>
+                                <span>Guitar Student</span>
+                            </div>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"My son's confidence on the violin has grown so much thanks to Ms. Rodriguez's exceptional teaching. She's a true artist and a wonderful person."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4>Lisa Rodriguez</h4>
+                                <span>Violin Student</span>
+                            </div>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What types of lessons do you offer?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer private lessons for piano, guitar, violin, drums, and various other instruments. We also provide music theory, performance coaching, and music history lessons.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can you teach beginners?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! We have experienced instructors who specialize in teaching students of all ages and skill levels, from complete beginners to advanced players.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How do I get started?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Simply click the "Book Lesson" button on our homepage, fill out the booking form, and select your preferred instrument, lesson time, and skill level. We'll send you a confirmation email with your Zoom meeting details.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What are your rates?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our rates vary by instrument and lesson type. For a general estimate, private piano lessons are $30 per 30-minute session, while guitar lessons are $40 per 45-minute session. Please contact us for specific rates and availability.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you offer in-person lessons?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer both online and in-person lessons. Our online platform is secure and reliable, while in-person lessons can be arranged in the Tampa Bay area.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What if I need to cancel or reschedule?</h3>
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We require a 24-hour notice for cancellations to avoid being charged for the lesson. For reschedules, we can accommodate as long as the new time is available.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About Our Services</h2>
+                <div class="about-content">
+                    <p>We are passionate about music education and dedicated to helping students achieve their musical goals. Our experienced instructors are carefully selected and undergo rigorous training to ensure they provide the highest quality instruction.</p>
+                    <p>We believe in a personalized approach to learning, where each student's unique needs and goals are met. Whether you're a beginner or an advanced player, we have the expertise and resources to guide you on your musical journey.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <div class="contact-content">
+                    <p>Ready to start your musical journey? Contact us today to schedule your first lesson.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <h3>Email</h3>
+                            <p><a href="mailto:musictutoringfl@gmail.com">musictutoringfl@gmail.com</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>Phone</h3>
+                            <p><a href="tel:9046073835">(904) 607-3835</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>Hours</h3>
+                            <p>Monday - Sunday, 9 AM - 9 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Admin Panel (Hidden) -->
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>📊 Booking Management</h2>
+                <button onclick="closeAdminPanel()" class="close-admin">&times;</button>
+            </div>
+            <div class="admin-body">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <h3 id="totalBookings">0</h3>
+                        <p>Total Bookings</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="todayBookings">0</h3>
+                        <p>Today's Bookings</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalRevenue">$0</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>📧 Email Testing</h3>
+                    <div class="email-controls">
+                        <input type="email" id="testEmail" placeholder="Test email address">
+                        <button onclick="sendTestConfirmationEmail()" class="btn-admin">Send Test Confirmation</button>
+                        <button onclick="sendTestMeetingLink()" class="btn-admin">Send Test Meeting Link</button>
+                        <button onclick="sendTestReminder()" class="btn-admin">Send Test Reminder</button>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>📅 Recent Bookings</h3>
+                    <div id="bookingsList" class="bookings-list">
+                        <!-- Bookings will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="admin-actions">
+                    <button onclick="exportBookings()" class="btn-admin">Export Bookings</button>
+                    <button onclick="clearAllBookings()" class="btn-admin danger">Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Schedule Your Music Lesson</h2>
+                <span class="close" onclick="closeBookingModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Security & Privacy Information -->
+                <div class="security-section">
+                    <div class="security-badges">
+                        <div class="security-badge">
+                            <span class="security-icon">🔒</span>
+                            <div class="security-text">
+                                <strong>256-bit SSL Encryption</strong>
+                                <small>Your data is protected with bank-level security</small>
+                            </div>
+                        </div>
+                        <div class="security-badge">
+                            <span class="security-icon">🛡️</span>
+                            <div class="security-text">
+                                <strong>We Never Share Your Info</strong>
+                                <small>Your personal information stays private</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="privacy-notice">
+                        <p><strong>🔐 Safe & Secure:</strong> All transactions are encrypted and processed through Stripe's secure payment system. We never store your payment information on our servers.</p>
+                    </div>
+                </div>
+
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="clientName">Full Name *</label>
+                        <input type="text" id="clientName" name="clientName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clientEmail">Email Address(es) *</label>
+                        <div id="emailContainer">
+                            <div class="email-input-group">
+                                <input type="email" id="clientEmail" name="clientEmail" placeholder="Primary email address" required>
+                                <button type="button" id="addEmailBtn" class="add-email-btn">+ Add Email</button>
+                            </div>
+                        </div>
+                        <small style="color: #666; font-size: 12px;">The first email is used for payment billing. All emails will receive meeting invitations and notifications.</small>
+                        <div class="email-notice">
+                            <p><strong>📧 Important:</strong> Please check your spam folder for emails from our company and a second email from Zoom containing your meeting details and identity verification link.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clientPhone">Phone Number (Optional)</label>
+                        <input type="tel" id="clientPhone" name="clientPhone" placeholder="For urgent notifications only">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instrument">Instrument *</label>
+                        <select id="instrument" name="instrument" required>
+                            <option value="">Select an instrument</option>
+                            <option value="piano">Piano</option>
+                            <option value="guitar">Guitar</option>
+                            <option value="violin">Violin</option>
+                            <option value="drums">Drums</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lessonType">Lesson Type *</label>
+                        <select id="lessonType" name="lessonType" required>
+                            <option value="">Select lesson type</option>
+                            <option value="private">Private Lesson</option>
+                            <option value="theory">Music Theory</option>
+                            <option value="performance">Performance Coaching</option>
+                            <option value="history">Music History</option>
+                            <option value="technology">Music Technology</option>
+                            <option value="business">Music Business</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appointmentDate">Preferred Date *</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="appointmentTime">Available Time Slots *</label>
+                        <div id="timeSlots" class="time-slots">
+                            <!-- Time slots will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="specialRequests">Special Requests or Notes</label>
+                        <textarea id="specialRequests" name="specialRequests" rows="3" placeholder="Any special requirements or additional information..."></textarea>
+                    </div>
+                    
+                    <!-- Customer Support Section -->
+                    <div class="customer-support-section">
+                        <div class="support-header">
+                            <h3>🆘 Need Help?</h3>
+                            <p>Having issues with signup, billing, or anything else? We're here to help!</p>
+                        </div>
+                        <div class="support-options">
+                            <div class="support-option">
+                                <span class="support-icon">📧</span>
+                                <div class="support-text">
+                                    <strong>Email Support</strong>
+                                    <a href="mailto:musictutoringfl@gmail.com">musictutoringfl@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="support-option">
+                                <span class="support-icon">📱</span>
+                                <div class="support-text">
+                                    <strong>Text Message</strong>
+                                    <a href="sms:9046073835">(904) 607-3835</a>
+                                </div>
+                            </div>
+                            <div class="support-option">
+                                <span class="support-icon">📞</span>
+                                <div class="support-text">
+                                    <strong>Phone Call</strong>
+                                    <a href="tel:9046073835">(904) 607-3835</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paymentInfo">Payment Information</label>
+                        <div id="card-element" class="stripe-card-element">
+                            <!-- Stripe Elements will create form elements here -->
+                        </div>
+                        <div id="card-errors" role="alert" class="card-errors"></div>
+                        <div class="payment-summary">
+                            <p>Subtotal: $<span id="paymentSubtotal">0</span></p>
+                            <p id="discountLine" style="display: none; color: #28a745;">Discount (50% off): -$<span id="discountAmount">0</span></p>
+                            <p><strong>Total: $<span id="paymentAmount">0</span></strong></p>
+                            <small>Payment will be processed securely through Stripe</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="promoCode">Promo Code (Optional)</label>
+                        <div class="promo-code-input-group">
+                            <input type="text" id="promoCode" name="promoCode" placeholder="Enter promo code">
+                            <button type="button" id="applyPromoCode" class="btn-promo">Apply</button>
+                        </div>
+                        <div id="promo-message" class="promo-message"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeBookingModal()">Cancel</button>
+                        <button type="submit" class="btn-primary" id="submitPayment">Pay & Schedule Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: <a href="mailto:musictutoringfl@gmail.com">musictutoringfl@gmail.com</a></p>
+                    <p>Phone: <a href="tel:9046073835">(904) 607-3835</a></p>
+                </div>
+                <div class="footer-info">
+                    <p>&copy; 2024 MusicTutoringFL LLC. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
