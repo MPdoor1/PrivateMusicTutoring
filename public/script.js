@@ -232,9 +232,22 @@ function updatePaymentAmount() {
     } else {
         // Default to 40 (our standard price) if no service is selected
         console.log('Service not found, defaulting to $40');
-        if (paymentSubtotal) paymentSubtotal.textContent = '40';
-        if (paymentAmount) paymentAmount.textContent = '40';
+        if (paymentSubtotal) {
+            paymentSubtotal.textContent = '40';
+            console.log('Set subtotal to 40');
+        }
+        if (paymentAmount) {
+            paymentAmount.textContent = '40';
+            console.log('Set amount to 40');
+        }
         if (discountLine) discountLine.style.display = 'none';
+        
+        // Force visible update for debugging
+        const testDiv = document.createElement('div');
+        testDiv.style.cssText = 'position: fixed; top: 10px; right: 10px; background: red; color: white; padding: 10px; z-index: 9999;';
+        testDiv.textContent = 'Payment Update Called - Check Total!';
+        document.body.appendChild(testDiv);
+        setTimeout(() => testDiv.remove(), 3000);
     }
 }
 
@@ -454,10 +467,16 @@ function openBookingModal() {
         console.log('Could not find instrument select element');
     }
     
-    // Call updatePaymentAmount initially to set default values
+    // Force update payment amount multiple times to ensure it works
+    updatePaymentAmount(); // Call immediately
     setTimeout(() => {
-        updatePaymentAmount();
+        updatePaymentAmount(); // Call after 100ms
+        console.log('Payment update called from timeout');
     }, 100);
+    setTimeout(() => {
+        updatePaymentAmount(); // Call after 500ms
+        console.log('Payment update called from longer timeout');
+    }, 500);
     
     // Set up promo code functionality
     const applyPromoCodeButton = document.getElementById('applyPromoCode');
