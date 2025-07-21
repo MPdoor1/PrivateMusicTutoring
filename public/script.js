@@ -557,8 +557,10 @@ function generateTimeSlots() {
     const selectedDate = document.getElementById('appointmentDate').value;
     const timeSlotsContainer = document.getElementById('timeSlots');
     
+    console.log('generateTimeSlots called with date:', selectedDate);
+    
     if (!selectedDate) {
-        timeSlotsContainer.innerHTML = '<p>Please select a date first</p>';
+        timeSlotsContainer.innerHTML = '<p style="color: #666; padding: 10px; text-align: center;">Please select a date first</p>';
         return;
     }
     
@@ -643,6 +645,8 @@ function generateTimeSlots() {
         }
     }
     
+    console.log('Generated', timeSlots.length, 'time slots');
+    
     // Generate time slot buttons
     timeSlotsContainer.innerHTML = tzInfo + timeSlots.map(slot => `
         <div class="time-slot ${slot.booked ? 'unavailable' : ''}" 
@@ -653,6 +657,10 @@ function generateTimeSlots() {
             ${slot.booked ? '<br><small>Booked</small>' : ''}
         </div>
     `).join('');
+    
+    if (timeSlots.length === 0) {
+        timeSlotsContainer.innerHTML += '<p style="color: red; padding: 10px;">No time slots available for this date.</p>';
+    }
 }
 
 function formatTime(hour, minute) {
