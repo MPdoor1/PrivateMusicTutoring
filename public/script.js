@@ -220,9 +220,11 @@ function updatePaymentAmount() {
             discountLine.style.display = 'none';
         }
     } else {
-        paymentSubtotal.textContent = '0';
-        paymentAmount.textContent = '0';
+        // Default to 40 (our standard price) if no service is selected
+        paymentSubtotal.textContent = '40';
+        paymentAmount.textContent = '40';
         discountLine.style.display = 'none';
+        console.log('Service not found, defaulting to $40');
     }
 }
 
