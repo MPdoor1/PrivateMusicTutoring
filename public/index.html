@@ -443,36 +443,20 @@
                         <input type="tel" id="clientPhone" name="clientPhone" placeholder="For urgent notifications only">
                     </div>
                     
+                                                             <div class="form-group">
+                        <label for="instrument">Lesson Type *</label>
+                        <select id="instrument" name="instrument" required>
+                            <option value="">Select lesson type</option>
+                            <option value="online">Private Lesson Online - $40/30min</option>
+                            <option value="travelling">Private Lesson Travelling - $40/30min</option>
+                        </select>
+                    </div>
+                     
                                          <div class="form-group">
-                         <label for="instrument">Instrument *</label>
-                         <select id="instrument" name="instrument" required>
-                             <option value="">Select an instrument</option>
-                             <option value="piano">Piano - $40/30min</option>
-                             <option value="guitar">Guitar - $40/30min</option>
-                             <option value="violin">Violin - $40/30min</option>
-                             <option value="drums">Drums - $40/30min</option>
-                             <option value="theory">Music Theory - $40/30min</option>
-                             <option value="performance">Performance Coaching - $40/30min</option>
-                             <option value="history">Music History - $40/30min</option>
-                             <option value="technology">Music Technology - $40/30min</option>
-                             <option value="business">Music Business - $40/30min</option>
-                         </select>
-                     </div>
-                     
-                     <div class="form-group">
-                         <label for="lessonFormat">Lesson Format *</label>
-                         <select id="lessonFormat" name="lessonFormat" required>
-                             <option value="">Select lesson format</option>
-                             <option value="online">Online Lesson (WhatsApp Video Call)</option>
-                             <option value="in-person">In-Person Lesson (I'll drive to you)</option>
-                         </select>
-                     </div>
-                     
-                     <div class="form-group">
-                         <label for="address">Address/Location for Lesson *</label>
-                         <textarea id="address" name="address" rows="3" placeholder="For online lessons: Enter 'Online via WhatsApp'&#10;For in-person lessons: Enter your full address in Jacksonville, FL area" required></textarea>
-                         <small style="color: #666; margin-top: 5px; display: block;">Please specify if online or provide your complete address for in-person lessons</small>
-                     </div>
+                        <label for="address">Address/Location & Instrument Details *</label>
+                        <textarea id="address" name="address" rows="4" placeholder="For ONLINE lessons: Enter 'Online via WhatsApp' + your instrument&#10;For TRAVELLING lessons: Enter your full address in Jacksonville, FL area + your instrument&#10;&#10;Example: 'Online via WhatsApp - Piano lesson' or '123 Main St, Jacksonville, FL - Guitar lesson'" required></textarea>
+                        <small style="color: #666; margin-top: 5px; display: block;">Please specify lesson type, your instrument, and location details</small>
+                    </div>
                     
                     <div class="form-group">
                         <label for="appointmentDate">Preferred Date *</label>

@@ -145,68 +145,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Service options with Stripe product IDs and pricing - All lessons are $40 for 30 minutes
 const serviceOptions = {
-    'piano': {
-        name: 'Piano Lesson',
+    'online': {
+        name: 'Private Lesson Online',
         price: 40,
         duration: '30 minutes',
         productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Private piano instruction for all skill levels'
+        description: 'Private music lesson via WhatsApp video call - any instrument'
     },
-    'guitar': {
-        name: 'Guitar Lesson',
+    'travelling': {
+        name: 'Private Lesson Travelling',
         price: 40,
         duration: '30 minutes',
         productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Private guitar instruction for all skill levels'
-    },
-    'violin': {
-        name: 'Violin Lesson',
-        price: 40,
-        duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Private violin instruction for all skill levels'
-    },
-    'drums': {
-        name: 'Drum Lesson',
-        price: 40,
-        duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Private drum instruction for all skill levels'
-    },
-    'theory': {
-        name: 'Music Theory',
-        price: 40,
-        duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Learn music theory, notation, and ear training'
-    },
-    'performance': {
-        name: 'Performance Coaching',
-        price: 40,
-        duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Prepare for recitals, auditions, and performances'
-    },
-    'history': {
-        name: 'Music History',
-        price: 40,
-        duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Explore the history of music and its cultural impact'
-    },
-    'technology': {
-        name: 'Music Technology',
-        price: 40,
-        duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Introduction to music software and production'
-    },
-    'business': {
-        name: 'Music Business',
-        price: 40,
-        duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
-        description: 'Understanding the music industry and career options'
+        description: 'Private music lesson at your location - any instrument'
     }
 };
 
