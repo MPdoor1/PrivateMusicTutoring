@@ -861,6 +861,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up event listeners
     if (dateInput) {
         dateInput.addEventListener('change', generateTimeSlots);
+        // Also call it initially to show initial state
+        generateTimeSlots();
     }
     
     // Email management functions (made global for onclick handlers)
