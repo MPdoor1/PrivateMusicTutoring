@@ -144,63 +144,63 @@ const serviceOptions = {
         name: 'Piano Lesson',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_piano_lesson',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Private piano instruction for all skill levels'
     },
     'guitar': {
         name: 'Guitar Lesson',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_guitar_lesson',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Private guitar instruction for all skill levels'
     },
     'violin': {
         name: 'Violin Lesson',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_violin_lesson',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Private violin instruction for all skill levels'
     },
     'drums': {
         name: 'Drum Lesson',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_drum_lesson',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Private drum instruction for all skill levels'
     },
     'theory': {
         name: 'Music Theory',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_music_theory',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Learn music theory, notation, and ear training'
     },
     'performance': {
         name: 'Performance Coaching',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_performance_coaching',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Prepare for recitals, auditions, and performances'
     },
     'history': {
         name: 'Music History',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_music_history',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Explore the history of music and its cultural impact'
     },
     'technology': {
         name: 'Music Technology',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_music_technology',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Introduction to music software and production'
     },
     'business': {
         name: 'Music Business',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_music_business',
+        productId: 'prod_Sir9UM9pXwEdl2',
         description: 'Understanding the music industry and career options'
     }
 };
