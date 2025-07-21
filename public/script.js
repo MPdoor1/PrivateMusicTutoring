@@ -149,17 +149,19 @@ const serviceOptions = {
         name: 'Private Lesson Online',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
+        productId: 'prod_Sir9UM9pXwEdl2', // Your actual Stripe product ID
         description: 'Private music lesson via WhatsApp video call - any instrument'
     },
     'travelling': {
         name: 'Private Lesson Travelling',
         price: 40,
         duration: '30 minutes',
-        productId: 'prod_Sir9UM9pXwEdl2',
+        productId: 'prod_Sir9UM9pXwEdl2', // Same product ID for both
         description: 'Private music lesson at your location - any instrument'
     }
 };
+
+console.log('Service options loaded:', serviceOptions);
 
 // Stripe Elements initialization
 function initializeStripeElements() {
@@ -214,20 +216,26 @@ function updatePaymentAmount() {
     
     if (serviceType && serviceOptions[serviceType]) {
         const originalPrice = serviceOptions[serviceType].price;
-        console.log('Found service, price:', originalPrice);
-        paymentSubtotal.textContent = originalPrice;
+        console.log('✅ Found service:', serviceType, 'price:', originalPrice);
+        if (paymentSubtotal) {
+            paymentSubtotal.textContent = originalPrice;
+            console.log('✅ Updated subtotal to:', originalPrice);
+        }
         
         // Apply promo code discount if available
         if (appliedPromoCode && promoCodeDiscount > 0) {
             const discount = originalPrice * (promoCodeDiscount / 100);
             const finalPrice = originalPrice - discount;
             
-            discountAmount.textContent = discount.toFixed(2);
-            paymentAmount.textContent = finalPrice.toFixed(2);
-            discountLine.style.display = 'block';
+            if (discountAmount) discountAmount.textContent = discount.toFixed(2);
+            if (paymentAmount) paymentAmount.textContent = finalPrice.toFixed(2);
+            if (discountLine) discountLine.style.display = 'block';
         } else {
-            paymentAmount.textContent = originalPrice;
-            discountLine.style.display = 'none';
+            if (paymentAmount) {
+                paymentAmount.textContent = originalPrice;
+                console.log('✅ Updated total to:', originalPrice);
+            }
+            if (discountLine) discountLine.style.display = 'none';
         }
     } else {
         // Default to 40 (our standard price) if no service is selected
@@ -461,8 +469,11 @@ function openBookingModal() {
         // Remove any existing event listeners
         serviceTypeSelect.removeEventListener('change', updatePaymentAmount);
         // Add the event listener
-        serviceTypeSelect.addEventListener('change', updatePaymentAmount);
-        console.log('Added change listener to instrument select');
+        serviceTypeSelect.addEventListener('change', function() {
+            console.log('🔄 Lesson type changed! Updating payment...');
+            updatePaymentAmount();
+        });
+        console.log('✅ Added change listener to instrument select');
     } else {
         console.log('Could not find instrument select element');
     }
