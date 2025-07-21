@@ -142,7 +142,7 @@ const PROOF_API_HEADERS = {
 const googleCalendarClientId = process.env.GOOGLE_CLIENT_ID;
 const googleCalendarClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const googleCalendarRefreshToken = process.env.GOOGLE_REFRESH_TOKEN;
-const googleCalendarEmail = 'musictutoringfl@gmail.com';
+const googleCalendarEmail = 'mpdoor1@gmail.com';
 
 if (!googleCalendarClientId || !googleCalendarClientSecret || !googleCalendarRefreshToken) {
   console.warn('⚠️  Google Calendar credentials not found. Calendar integration will be disabled.');
@@ -345,7 +345,7 @@ IMPORTANT: You must upload your documents before the meeting. Use the link provi
 
 You will meet with a licensed notary via video call. Please have your valid government-issued photo ID ready. The meeting link will become active 15 minutes before your scheduled time.
 
-For technical support, contact musictutoringfl@gmail.com`,
+For technical support, contact mpdoor1@gmail.com`,
       message_signature: "Music Tutoring FL - Professional Music Lessons"
     };
 
@@ -402,7 +402,7 @@ const createBusinessNotificationEmail = (bookingData, meetingLink = null) => {
   const cleanDateTime = `${formattedDate} at ${formattedTime}`;
   
   return {
-            to: 'musictutoringfl@gmail.com', // Send to Gmail only (single email)
+            to: 'mpdoor1@gmail.com', // Send to Gmail only (single email)
     from: 'musictutoringfl@musictutoringfl.com',
     subject: `🔔 NEW LESSON BOOKING - ${bookingData.client_name} - ${bookingData.booking_id}`,
     html: `
@@ -583,7 +583,7 @@ const createMeetingLinkEmail = (bookingData, meetingLink) => {
   const cleanDateTime = `${formattedDate} at ${formattedTime}`;
   
   return {
-            to: [bookingData.email, 'musictutoringfl@gmail.com'], // Send to client and Gmail only
+            to: [bookingData.email, 'mpdoor1@gmail.com'], // Send to client and Gmail only
     from: 'musictutoringfl@musictutoringfl.com',
     subject: `🔗 Your Music Lesson Meeting Link - ${bookingData.booking_id}`,
     html: `
@@ -860,7 +860,7 @@ app.post('/confirm-payment', async (req, res) => {
       try {
         const businessNotificationData = createBusinessNotificationEmail(booking_data, meetingLink);
         await sgMail.send(businessNotificationData);
-        console.log('Business notification email sent to musictutoringfl@gmail.com');
+        console.log('Business notification email sent to mpdoor1@gmail.com');
       } catch (businessEmailError) {
         console.error('Failed to send business notification email:', businessEmailError.message);
         emailErrors.push(`Failed to send business notification: ${businessEmailError.message}`);

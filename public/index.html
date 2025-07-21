@@ -6,11 +6,12 @@
     <title>Private Music Tutoring</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="MusicTutoringFavicon.jpg">
-    <link rel="shortcut icon" href="MusicTutoringFavicon.jpg">
-    <link rel="apple-touch-icon" href="MusicTutoringFavicon.jpg">
+    <link rel="icon" type="image/svg+xml" href="music-favicon.svg">
+    <link rel="shortcut icon" href="music-favicon.svg">
+    <link rel="apple-touch-icon" href="music-favicon.svg">
     
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fun-animations.css">
     <script src="config.js"></script>
     <script src="github-pages-booking.js"></script>
 </head>
@@ -19,8 +20,8 @@
         <nav>
             <div class="nav-container">
                 <h1 class="logo">
-                    <img src="MusicTutoringFavicon.jpg" alt="Private Music Tutoring" width="32" height="32" class="logo-icon">
-                    Music Tutoring
+                    <img src="music-favicon.svg" alt="Private Music Tutoring" width="32" height="32" class="logo-icon">
+                    🎵 Music Tutoring
                 </h1>
                 <ul class="nav-menu">
                     <li><a href="#home">Home</a></li>
@@ -222,12 +223,12 @@
                     
                     <div class="faq-item">
                         <div class="faq-question">
-                            <h3>What are your rates?</h3>
-                            <span class="faq-toggle">+</span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Our rates vary by instrument and lesson type. For a general estimate, private piano lessons are $30 per 30-minute session, while guitar lessons are $40 per 45-minute session. Please contact us for specific rates and availability.</p>
-                        </div>
+                                                     <h3>What are your rates?</h3>
+                             <span class="faq-toggle">+</span>
+                         </div>
+                         <div class="faq-answer">
+                             <p>All our private music lessons are $40 for 30-minute sessions, regardless of instrument or lesson type. This includes piano, guitar, violin, drums, music theory, performance coaching, and more!</p>
+                         </div>
                     </div>
                     
                     <div class="faq-item">
@@ -267,16 +268,17 @@
             <div class="container">
                 <h2>Contact Us</h2>
                 <div class="contact-content">
-                    <p>Ready to start your musical journey? Contact us today to schedule your first lesson.</p>
+                                         <p>Ready to start your musical journey? All lessons are just $40 for 30 minutes! Available online via WhatsApp video call or I can drive to your location.</p>
                     <div class="contact-info">
-                        <div class="contact-item">
-                            <h3>Email</h3>
-                            <p><a href="mailto:musictutoringfl@gmail.com">musictutoringfl@gmail.com</a></p>
-                        </div>
-                        <div class="contact-item">
-                            <h3>Phone</h3>
-                            <p><a href="tel:9046073835">(904) 607-3835</a></p>
-                        </div>
+                                                  <div class="contact-item">
+                              <h3>Email</h3>
+                              <p><a href="mailto:mpdoor1@gmail.com">mpdoor1@gmail.com</a></p>
+                          </div>
+                                                  <div class="contact-item">
+                              <h3>Phone</h3>
+                              <p><a href="tel:9046073835">(904) 607-3835</a></p>
+                              <p><small>WhatsApp Video Calls for Online Lessons</small></p>
+                          </div>
                         <div class="contact-item">
                             <h3>Hours</h3>
                             <p>Monday - Sunday, 9 AM - 9 PM</p>
@@ -391,30 +393,35 @@
                         <input type="tel" id="clientPhone" name="clientPhone" placeholder="For urgent notifications only">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="instrument">Instrument *</label>
-                        <select id="instrument" name="instrument" required>
-                            <option value="">Select an instrument</option>
-                            <option value="piano">Piano</option>
-                            <option value="guitar">Guitar</option>
-                            <option value="violin">Violin</option>
-                            <option value="drums">Drums</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="lessonType">Lesson Type *</label>
-                        <select id="lessonType" name="lessonType" required>
-                            <option value="">Select lesson type</option>
-                            <option value="private">Private Lesson</option>
-                            <option value="theory">Music Theory</option>
-                            <option value="performance">Performance Coaching</option>
-                            <option value="history">Music History</option>
-                            <option value="technology">Music Technology</option>
-                            <option value="business">Music Business</option>
-                        </select>
-                    </div>
+                                         <div class="form-group">
+                         <label for="instrument">Instrument *</label>
+                         <select id="instrument" name="instrument" required>
+                             <option value="">Select an instrument</option>
+                             <option value="piano">Piano - $40/30min</option>
+                             <option value="guitar">Guitar - $40/30min</option>
+                             <option value="violin">Violin - $40/30min</option>
+                             <option value="drums">Drums - $40/30min</option>
+                             <option value="theory">Music Theory - $40/30min</option>
+                             <option value="performance">Performance Coaching - $40/30min</option>
+                             <option value="history">Music History - $40/30min</option>
+                             <option value="technology">Music Technology - $40/30min</option>
+                             <option value="business">Music Business - $40/30min</option>
+                         </select>
+                     </div>
+                     
+                     <div class="form-group">
+                         <label for="lessonFormat">Lesson Format *</label>
+                         <select id="lessonFormat" name="lessonFormat" required onchange="toggleAddressField()">
+                             <option value="">Select lesson format</option>
+                             <option value="online">Online Lesson (WhatsApp Video Call)</option>
+                             <option value="in-person">In-Person Lesson (I'll drive to you)</option>
+                         </select>
+                     </div>
+                     
+                     <div class="form-group" id="addressGroup" style="display: none;">
+                         <label for="address">Your Address *</label>
+                         <textarea id="address" name="address" rows="3" placeholder="Please provide your full address for in-person lessons"></textarea>
+                     </div>
                     
                     <div class="form-group">
                         <label for="appointmentDate">Preferred Date *</label>
@@ -442,10 +449,10 @@
                         <div class="support-options">
                             <div class="support-option">
                                 <span class="support-icon">📧</span>
-                                <div class="support-text">
-                                    <strong>Email Support</strong>
-                                    <a href="mailto:musictutoringfl@gmail.com">musictutoringfl@gmail.com</a>
-                                </div>
+                                                                 <div class="support-text">
+                                     <strong>Email Support</strong>
+                                     <a href="mailto:mpdoor1@gmail.com">mpdoor1@gmail.com</a>
+                                 </div>
                             </div>
                             <div class="support-option">
                                 <span class="support-icon">📱</span>
@@ -499,14 +506,15 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-contact">
-                    <h4>Contact Us</h4>
-                    <p>Email: <a href="mailto:musictutoringfl@gmail.com">musictutoringfl@gmail.com</a></p>
-                    <p>Phone: <a href="tel:9046073835">(904) 607-3835</a></p>
-                </div>
-                <div class="footer-info">
-                    <p>&copy; 2024 MusicTutoringFL LLC. All rights reserved.</p>
-                </div>
+                                 <div class="footer-contact">
+                     <h4>Contact Us</h4>
+                     <p>Email: <a href="mailto:mpdoor1@gmail.com">mpdoor1@gmail.com</a></p>
+                     <p>Phone: <a href="tel:9046073835">(904) 607-3835</a></p>
+                     <p>WhatsApp Video for Online Lessons</p>
+                 </div>
+                                 <div class="footer-info">
+                     <p>&copy; 2024 Private Music Tutoring Services. All rights reserved.</p>
+                 </div>
             </div>
         </div>
     </footer>

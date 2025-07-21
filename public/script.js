@@ -138,59 +138,68 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeStripeElements();
 });
 
-// Service options with Stripe product IDs and pricing
+// Service options with Stripe product IDs and pricing - All lessons are $40 for 30 minutes
 const serviceOptions = {
     'piano': {
         name: 'Piano Lesson',
-        price: 30,
+        price: 40,
+        duration: '30 minutes',
         productId: 'prod_piano_lesson',
         description: 'Private piano instruction for all skill levels'
     },
     'guitar': {
         name: 'Guitar Lesson',
         price: 40,
+        duration: '30 minutes',
         productId: 'prod_guitar_lesson',
         description: 'Private guitar instruction for all skill levels'
     },
     'violin': {
         name: 'Violin Lesson',
-        price: 35,
+        price: 40,
+        duration: '30 minutes',
         productId: 'prod_violin_lesson',
         description: 'Private violin instruction for all skill levels'
     },
     'drums': {
         name: 'Drum Lesson',
-        price: 45,
+        price: 40,
+        duration: '30 minutes',
         productId: 'prod_drum_lesson',
         description: 'Private drum instruction for all skill levels'
     },
     'theory': {
         name: 'Music Theory',
-        price: 25,
+        price: 40,
+        duration: '30 minutes',
         productId: 'prod_music_theory',
         description: 'Learn music theory, notation, and ear training'
     },
     'performance': {
         name: 'Performance Coaching',
-        price: 50,
+        price: 40,
+        duration: '30 minutes',
         productId: 'prod_performance_coaching',
         description: 'Prepare for recitals, auditions, and performances'
     },
     'history': {
         name: 'Music History',
-        price: 25,
+        price: 40,
+        duration: '30 minutes',
         productId: 'prod_music_history',
         description: 'Explore the history of music and its cultural impact'
     },
     'technology': {
         name: 'Music Technology',
         price: 40,
+        duration: '30 minutes',
         productId: 'prod_music_technology',
         description: 'Introduction to music software and production'
     },
     'business': {
         name: 'Music Business',
-        price: 35,
+        price: 40,
+        duration: '30 minutes',
         productId: 'prod_music_business',
         description: 'Understanding the music industry and career options'
     }
@@ -1442,3 +1451,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 }); // Force redeploy
+
+// Toggle address field based on lesson format
+function toggleAddressField() {
+    const lessonFormat = document.getElementById('lessonFormat').value;
+    const addressGroup = document.getElementById('addressGroup');
+    const addressField = document.getElementById('address');
+    
+    if (lessonFormat === 'in-person') {
+        addressGroup.style.display = 'block';
+        addressField.required = true;
+    } else {
+        addressGroup.style.display = 'none';
+        addressField.required = false;
+        addressField.value = '';
+    }
+}

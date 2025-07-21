@@ -15,7 +15,7 @@ const CONFIG = {
     },
     
     // Netlify Forms or FormSubmit.co for form handling (alternative to server-side processing)
-    FORM_ACTION: 'https://formsubmit.co/musictutoringfl@gmail.com', // Replace with your email
+    FORM_ACTION: 'https://formsubmit.co/mpdoor1@gmail.com', // Updated with your email
     
     // For advanced booking functionality, consider using:
     // - Calendly API for scheduling
