@@ -119,20 +119,25 @@ const isUserInEasternTime = () => {
 // Booking System
 let bookings = JSON.parse(localStorage.getItem('musicLessonBookings') || '[]');
 
-// EmailJS Configuration (you'll need to replace these with your actual EmailJS credentials)
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // Replace with your EmailJS public key
-const EMAILJS_SERVICE_ID = 'service_music'; // Replace with your EmailJS service ID
-const EMAILJS_TEMPLATE_ID = 'template_booking_confirmation'; // Replace with your template ID
+// EmailJS Configuration - Music Lesson Booking System
+const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY'; // You'll need to get this from EmailJS dashboard
+const EMAILJS_SERVICE_ID = 'service_music_lessons'; 
+const EMAILJS_TEMPLATE_ID = 'template_music_booking';
 
 // Stripe Configuration
 const stripe = Stripe('pk_live_51RknYjGpt03TMvPV64qnnRVkH5GHluzHm6JINV4wFsdWkC5ur0ccsBN37JVA7LkLfmBOPe1Ts43mxxQ66VXxEwLY004cVijecC');
 const elements = stripe.elements();
 let cardElement = null;
 
-// Initialize EmailJS and Stripe
+// Initialize EmailJS
 document.addEventListener('DOMContentLoaded', function() {
-    // For now, we'll use a demo mode - you'll need to set up EmailJS account
-    console.log('EmailJS initialized for booking confirmations');
+    // Initialize EmailJS with public key (when you get your actual key)
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+        console.log('EmailJS initialized for music lesson confirmations');
+    } else {
+        console.log('EmailJS not loaded - using fallback email system');
+    }
     
     // Initialize Stripe Elements
     initializeStripeElements();
@@ -807,9 +812,207 @@ function calculateHoursUntilAppointment(booking) {
     return Math.ceil(timeDiff / (1000 * 3600)); // Convert to hours
 }
 
+// Send booking confirmation emails using EmailJS
+async function sendBookingEmails(booking) {
+    try {
+        // Extract all email addresses
+        const customerEmails = booking.allEmails.split(',').map(email => email.trim());
+        const musicTeacherEmail = 'MPdoor1@gmail.com';
+        
+        // Get current date/time for email
+        const now = new Date();
+        const bookingDateTime = formatBookingDate(booking.date) + ' at ' + booking.timeDisplay;
+        
+        // Format address info
+        const addressInfo = booking.specialRequests || 'No special requests provided';
+        
+        // Format price info
+        let priceInfo = `$${booking.price} (PAID)`;
+        if (booking.promoCode && booking.discountPercent > 0) {
+            priceInfo = `$${booking.originalPrice} - ${booking.discountPercent}% off (${booking.promoCode}) = $${booking.price} (PAID)`;
+        }
+        
+        // Create comprehensive email data
+        const emailData = {
+            customer_name: booking.name,
+            customer_email: booking.email,
+            customer_phone: booking.phone,
+            lesson_type: booking.serviceName,
+            lesson_date: formatBookingDate(booking.date),
+            lesson_time: booking.timeDisplay,
+            lesson_price: priceInfo,
+            special_requests: addressInfo,
+            booking_id: booking.id,
+            booking_datetime: bookingDateTime,
+            sent_time: now.toLocaleString(),
+            teacher_email: musicTeacherEmail,
+            all_customer_emails: booking.allEmails
+        };
+        
+        // Send to customer(s)
+        for (const customerEmail of customerEmails) {
+            const customerEmailData = {
+                ...emailData,
+                to_email: customerEmail,
+                to_name: booking.name,
+                is_customer: 'true',
+                email_subject: '🎵 Music Lesson Confirmed - ' + bookingDateTime
+            };
+            
+            console.log('Sending customer confirmation email to:', customerEmail);
+            await sendEmailViaEmailJS(customerEmailData);
+        }
+        
+        // Send to music teacher (you)
+        const teacherEmailData = {
+            ...emailData,
+            to_email: musicTeacherEmail,
+            to_name: 'Music Teacher',
+            is_customer: 'false',
+            email_subject: '🎵 New Lesson Booking - ' + bookingDateTime
+        };
+        
+        console.log('Sending teacher notification email to:', musicTeacherEmail);
+        await sendEmailViaEmailJS(teacherEmailData);
+        
+        return true;
+    } catch (error) {
+        console.error('Error sending booking emails:', error);
+        return false;
+    }
+}
+
+// Send individual email using EmailJS
+async function sendEmailViaEmailJS(emailData) {
+    // If EmailJS is not available, use fallback method
+    if (typeof emailjs === 'undefined') {
+        console.log('EmailJS not available, using fallback method');
+        return await sendEmailFallback(emailData);
+    }
+    
+    try {
+        const response = await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            emailData
+        );
+        console.log('Email sent successfully:', response);
+        return true;
+    } catch (error) {
+        console.error('EmailJS error:', error);
+        // Try fallback method
+        return await sendEmailFallback(emailData);
+    }
+}
+
+// Fallback email method using FormSubmit.co
+async function sendEmailFallback(emailData) {
+    try {
+        // Create email body with all booking details
+        const isCustomer = emailData.is_customer === 'true';
+        
+        let emailBody = '';
+        
+        if (isCustomer) {
+            emailBody = `
+🎵 MUSIC LESSON CONFIRMATION 🎵
+
+Dear ${emailData.customer_name},
+
+Your music lesson has been successfully booked and payment confirmed!
+
+📅 LESSON DETAILS:
+• Date: ${emailData.lesson_date}
+• Time: ${emailData.lesson_time}
+• Service: ${emailData.lesson_type}
+• Price: ${emailData.lesson_price}
+
+👤 CONTACT INFO:
+• Student: ${emailData.customer_name}
+• Email: ${emailData.customer_email}
+• Phone: ${emailData.customer_phone}
+
+📍 LESSON LOCATION/NOTES:
+${emailData.special_requests}
+
+📞 CONTACT YOUR TEACHER:
+• Email: MPdoor1@gmail.com
+• Phone: 904-607-3835 (WhatsApp for online lessons)
+
+⚠️ IMPORTANT POLICIES:
+• All lesson purchases are FINAL - no cancellations, rescheduling, or refunds
+• For in-person lessons: Please have your address ready
+• For online lessons: WhatsApp video call will be used
+
+🎼 GET READY TO MAKE MUSIC!
+
+Booking ID: ${emailData.booking_id}
+Booked on: ${emailData.sent_time}
+
+---
+DO NOT REPLY TO THIS EMAIL
+For questions, contact: MPdoor1@gmail.com
+Private Music Tutoring Services
+            `;
+        } else {
+            emailBody = `
+🎵 NEW MUSIC LESSON BOOKING 🎵
+
+You have a new lesson booking!
+
+📅 LESSON DETAILS:
+• Date: ${emailData.lesson_date}
+• Time: ${emailData.lesson_time}
+• Service: ${emailData.lesson_type}
+• Price: ${emailData.lesson_price}
+
+👤 STUDENT INFO:
+• Name: ${emailData.customer_name}
+• Email: ${emailData.customer_email}
+• All Emails: ${emailData.all_customer_emails}
+• Phone: ${emailData.customer_phone}
+
+📍 LOCATION/SPECIAL REQUESTS:
+${emailData.special_requests}
+
+Booking ID: ${emailData.booking_id}
+Booked on: ${emailData.sent_time}
+
+---
+This is an automated booking notification.
+            `;
+        }
+        
+        // Use FormSubmit.co to send email
+        const formData = new FormData();
+        formData.append('email', emailData.to_email);
+        formData.append('subject', emailData.email_subject);
+        formData.append('message', emailBody);
+        formData.append('_replyto', 'MPdoor1@gmail.com');
+        formData.append('_next', window.location.href);
+        
+        const response = await fetch('https://formsubmit.co/ajax/MPdoor1@gmail.com', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (response.ok) {
+            console.log('Fallback email sent successfully to:', emailData.to_email);
+            return true;
+        } else {
+            console.error('Fallback email failed:', response.status);
+            return false;
+        }
+    } catch (error) {
+        console.error('Fallback email error:', error);
+        return false;
+    }
+}
+
 async function showBookingConfirmation(booking) {
-    // Emails are already sent by the server during payment confirmation
-    // No need to send duplicate emails here
+    // Send confirmation emails
+    console.log('Sending booking confirmation emails...');
+    const emailsSent = await sendBookingEmails(booking);
     
     // Format price information with discount details if applicable
     let priceInfo = `💰 Price: $${booking.price} (PAID)`;
@@ -819,22 +1022,27 @@ async function showBookingConfirmation(booking) {
         💰 Final Price: $${booking.price} (PAID)`;
     }
     
+    const emailStatus = emailsSent ? 
+        '📧 Confirmation emails sent!' : 
+        '⚠️ Email sending failed - you will be contacted directly';
+    
     const confirmationMessage = `
-        🎉 Appointment Scheduled Successfully!
+        🎉 Music Lesson Scheduled Successfully!
         
         📅 Date: ${formatBookingDate(booking.date)}
         ⏰ Time: ${booking.timeDisplay}
-        📋 Service: ${booking.serviceName}
+        🎵 Service: ${booking.serviceName}
         ${priceInfo}
         
-        📧 Confirmation email sent to: ${booking.email}
-        📱 Meeting link included in confirmation email
-        ⏰ Reminder email will be sent 1 hour before appointment
+        ${emailStatus}
         
-        Next Steps:
-        1. Check your email for confirmation details and meeting link
-        2. Have your ID and documents ready
-        3. Join meeting 5 minutes early for technical checks
+        📍 Next Steps:
+        1. Check your email for confirmation details
+        2. For in-person lessons: Prepare your address/location
+        3. For online lessons: WhatsApp video call (904-607-3835)
+        4. Have your instrument ready!
+        
+        🎼 Get ready to make beautiful music!
         
         Booking ID: ${booking.id}
     `;
