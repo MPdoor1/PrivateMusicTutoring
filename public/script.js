@@ -1124,7 +1124,16 @@ document.addEventListener('DOMContentLoaded', function() {
             
             try {
                 const serviceType = formData.get('instrument');
+                console.log('Service type from form:', serviceType);
+                console.log('Available service options:', Object.keys(serviceOptions));
+                
                 const selectedService = serviceOptions[serviceType];
+                console.log('Selected service:', selectedService);
+                
+                if (!selectedService) {
+                    alert('Please select a valid lesson type.');
+                    return;
+                }
                 
                 const allEmails = emailValidation.emails;
                 const primaryEmail = allEmails[0]; // Use first email for billing
