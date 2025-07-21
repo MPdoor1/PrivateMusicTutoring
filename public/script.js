@@ -197,14 +197,24 @@ let appliedPromoCode = null;
 let promoCodeDiscount = 0;
 
 function updatePaymentAmount() {
+    console.log('updatePaymentAmount called');
     const serviceType = document.getElementById('instrument').value;
     const paymentAmount = document.getElementById('paymentAmount');
     const paymentSubtotal = document.getElementById('paymentSubtotal');
     const discountLine = document.getElementById('discountLine');
     const discountAmount = document.getElementById('discountAmount');
     
+    console.log('Service type:', serviceType);
+    console.log('Payment elements found:', {
+        paymentAmount: !!paymentAmount,
+        paymentSubtotal: !!paymentSubtotal,
+        discountLine: !!discountLine,
+        discountAmount: !!discountAmount
+    });
+    
     if (serviceType && serviceOptions[serviceType]) {
         const originalPrice = serviceOptions[serviceType].price;
+        console.log('Found service, price:', originalPrice);
         paymentSubtotal.textContent = originalPrice;
         
         // Apply promo code discount if available
@@ -221,10 +231,10 @@ function updatePaymentAmount() {
         }
     } else {
         // Default to 40 (our standard price) if no service is selected
-        paymentSubtotal.textContent = '40';
-        paymentAmount.textContent = '40';
-        discountLine.style.display = 'none';
         console.log('Service not found, defaulting to $40');
+        if (paymentSubtotal) paymentSubtotal.textContent = '40';
+        if (paymentAmount) paymentAmount.textContent = '40';
+        if (discountLine) discountLine.style.display = 'none';
     }
 }
 
