@@ -1,0 +1,225 @@
+/* Hero Section Redesign - Completely Different Layout */
+.hero-redesign {
+    background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #60A5FA 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-redesign::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Text Section */
+.hero-text {
+    color: white;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin: 0 0 1rem 0;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.sub-title {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    margin: 0 0 2rem 0;
+    opacity: 0.8;
+}
+
+/* Highlight Items */
+.hero-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.highlight-icon {
+    font-size: 1.5rem;
+}
+
+/* Buttons */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.primary-cta {
+    background: linear-gradient(45deg, #F59E0B, #EAB308);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+.primary-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+}
+
+.secondary-cta {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondary-cta:hover {
+    background: white;
+    color: #1E3A8A;
+}
+
+/* Visual Section */
+.hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animated Music Notes */
+.music-notes-animation {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    z-index: 1;
+}
+
+.note {
+    position: absolute;
+    font-size: 2rem;
+    color: rgba(255,255,255,0.3);
+    animation: float 4s ease-in-out infinite;
+}
+
+.note1 { top: 10%; left: 10%; animation-delay: 0s; }
+.note2 { top: 20%; right: 20%; animation-delay: 1s; }
+.note3 { bottom: 30%; left: 30%; animation-delay: 2s; }
+.note4 { bottom: 10%; right: 10%; animation-delay: 3s; }
+.note5 { top: 50%; left: 50%; animation-delay: 1.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Pricing Card */
+.pricing-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 2;
+    max-width: 250px;
+}
+
+.pricing-card h3 {
+    color: #1E3A8A;
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #3B82F6;
+    margin: 0;
+}
+
+.price-detail {
+    color: #666;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+.price-features {
+    text-align: left;
+    color: #1E3A8A;
+    line-height: 1.6;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-highlights {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .music-notes-animation {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .note {
+        font-size: 1.5rem;
+    }
+} 

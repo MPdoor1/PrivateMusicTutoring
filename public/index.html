@@ -12,6 +12,7 @@
     
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="fun-animations.css">
+    <link rel="stylesheet" href="hero-redesign.css">
     <script src="config.js"></script>
     <script src="github-pages-booking.js"></script>
 </head>
@@ -20,7 +21,21 @@
         <nav>
             <div class="nav-container">
                 <h1 class="logo">
-                    <img src="music-favicon.svg" alt="Private Music Tutoring" width="32" height="32" class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+                        <circle cx="16" cy="16" r="16" fill="url(#logoGradient)"/>
+                        <path d="M12 22c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2z" fill="#FFFFFF"/>
+                        <path d="M20 20c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2z" fill="#FFFFFF"/>
+                        <rect x="14" y="8" width="2" height="14" fill="#FFFFFF"/>
+                        <rect x="22" y="6" width="2" height="14" fill="#FFFFFF"/>
+                        <path d="M16 8c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2s-.9 2-2 2h-6c-1.1 0-2-.9-2-2z" fill="#FFFFFF"/>
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1E3A8A;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#60A5FA;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
                     🎵 Music Tutoring
                 </h1>
                 <ul class="nav-menu">
@@ -37,28 +52,57 @@
     </header>
 
     <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h2>Professional Private Music Tutoring</h2>
-                <p>More <strong>Personalized</strong>, More <strong>Flexible</strong>, and <strong>Effective</strong> than group lessons</p>
-                <div class="selling-points">
-                    <div class="selling-point">
-                        <span class="icon">🎵</span>
-                        <h3>Personalized</h3>
-                        <p>Tailored lessons for your musical style & skill level</p>
+        <section id="home" class="hero-redesign">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <h1 class="main-title">Learn Music Your Way</h1>
+                    <h2 class="sub-title">Professional Private Music Tutoring in Jacksonville, FL</h2>
+                    <p class="hero-description">🎼 $40 per 30-minute lesson • Online or In-Person • All Skill Levels Welcome</p>
+                    
+                    <div class="hero-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🎹</div>
+                            <span>Piano • Guitar • Violin • Drums</span>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🎯</div>
+                            <span>Music Theory • Performance • Business</span>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">📱</div>
+                            <span>WhatsApp Video Calls Available</span>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🚗</div>
+                            <span>I Drive to You (Jacksonville Area)</span>
+                        </div>
                     </div>
-                    <div class="selling-point">
-                        <span class="icon">🏠</span>
-                        <h3>Flexible</h3>
-                        <p>Online or in-person - learn from anywhere</p>
-                    </div>
-                    <div class="selling-point">
-                        <span class="icon">🚀</span>
-                        <h3>Effective</h3>
-                        <p>One-on-one attention for faster progress</p>
+                    
+                    <div class="hero-buttons">
+                        <button class="primary-cta" onclick="openBookingModal()">🎵 Start Learning Today</button>
+                        <button class="secondary-cta" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">Learn More</button>
                     </div>
                 </div>
-                <button class="cta-button" onclick="openBookingModal()">Book Lesson</button>
+                
+                <div class="hero-visual">
+                    <div class="music-notes-animation">
+                        <div class="note note1">♪</div>
+                        <div class="note note2">♫</div>
+                        <div class="note note3">♪</div>
+                        <div class="note note4">♫</div>
+                        <div class="note note5">♪</div>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Simple Pricing</h3>
+                        <div class="price">$40</div>
+                        <div class="price-detail">30 minutes</div>
+                        <div class="price-features">
+                            ✓ All instruments<br>
+                            ✓ All skill levels<br>
+                            ✓ Flexible scheduling
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -243,11 +287,11 @@
                     
                                          <div class="faq-item">
                          <div class="faq-question">
-                             <h3>What if I need to cancel or reschedule?</h3>
+                             <h3>What is your cancellation and rescheduling policy?</h3>
                              <span class="faq-toggle">+</span>
                          </div>
                          <div class="faq-answer">
-                             <p>I require 24-hour notice for cancellations to avoid being charged for the lesson. Reschedules can be accommodated based on availability. Please note: all lesson purchases are final with no refunds.</p>
+                             <p><strong>All lesson purchases are final - no cancellations, rescheduling, or refunds.</strong> As a professional contractor, I plan my schedule and personal commitments around the time you have set an expectation for. When these expectations are not met, it creates significant inconvenience both professionally and personally. Please be certain of your availability before booking.</p>
                          </div>
                      </div>
                      
@@ -431,16 +475,17 @@
                      
                      <div class="form-group">
                          <label for="lessonFormat">Lesson Format *</label>
-                         <select id="lessonFormat" name="lessonFormat" required onchange="toggleAddressField()">
+                         <select id="lessonFormat" name="lessonFormat" required>
                              <option value="">Select lesson format</option>
                              <option value="online">Online Lesson (WhatsApp Video Call)</option>
                              <option value="in-person">In-Person Lesson (I'll drive to you)</option>
                          </select>
                      </div>
                      
-                     <div class="form-group" id="addressGroup" style="display: none;">
-                         <label for="address">Your Address *</label>
-                         <textarea id="address" name="address" rows="3" placeholder="Please provide your full address for in-person lessons"></textarea>
+                     <div class="form-group">
+                         <label for="address">Address/Location for Lesson *</label>
+                         <textarea id="address" name="address" rows="3" placeholder="For online lessons: Enter 'Online via WhatsApp'&#10;For in-person lessons: Enter your full address in Jacksonville, FL area" required></textarea>
+                         <small style="color: #666; margin-top: 5px; display: block;">Please specify if online or provide your complete address for in-person lessons</small>
                      </div>
                     
                     <div class="form-group">

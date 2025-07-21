@@ -1452,18 +1452,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }); // Force redeploy
 
-// Toggle address field based on lesson format
-function toggleAddressField() {
-    const lessonFormat = document.getElementById('lessonFormat').value;
-    const addressGroup = document.getElementById('addressGroup');
-    const addressField = document.getElementById('address');
-    
-    if (lessonFormat === 'in-person') {
-        addressGroup.style.display = 'block';
-        addressField.required = true;
-    } else {
-        addressGroup.style.display = 'none';
-        addressField.required = false;
-        addressField.value = '';
-    }
-}
+// Address field is now always visible - no toggle needed

@@ -22,13 +22,13 @@
 
 /* Rainbow text animation */
 @keyframes rainbow {
-    0% { color: #FF6B6B; }
-    16% { color: #4ECDC4; }
-    32% { color: #45B7D1; }
+    0% { color: #3B82F6; }
+    16% { color: #1D4ED8; }
+    32% { color: #60A5FA; }
     48% { color: #96CEB4; }
     64% { color: #FFEAA7; }
     80% { color: #DDA0DD; }
-    100% { color: #FF6B6B; }
+    100% { color: #3B82F6; }
 }
 
 /* Apply animations to elements */
@@ -114,7 +114,7 @@
     left: 0;
     width: 0;
     height: 3px;
-    background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+    background: linear-gradient(90deg, #3B82F6, #1D4ED8);
     transition: width 0.3s ease;
 }
 
@@ -129,7 +129,7 @@
 
 .faq-item:hover {
     transform: translateX(10px);
-    border-left: 5px solid #FF6B6B;
+    border-left: 5px solid #3B82F6;
 }
 
 /* Gradient backgrounds for sections */
@@ -161,13 +161,13 @@
 
 /* Contact section fun styling */
 #contact {
-    background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+    background: linear-gradient(45deg, #3B82F6, #1D4ED8);
     position: relative;
 }
 
 /* Fun button styles */
 .book-meeting-btn {
-    background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+    background: linear-gradient(45deg, #3B82F6, #1D4ED8);
     animation: pulse 2s ease-in-out infinite;
     transition: all 0.3s ease;
 }
@@ -181,7 +181,7 @@
 /* Price display with fun animation */
 .payment-amount {
     font-weight: bold;
-    color: #FF6B6B;
+    color: #3B82F6;
     animation: rainbow 5s linear infinite;
 }
 
