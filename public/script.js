@@ -360,13 +360,20 @@ async function processStripePayment(booking) {
         // Check if running on GitHub Pages or static hosting
         const config = window.MUSIC_TUTORING_CONFIG;
         const isGitHubPages = config && config.IS_GITHUB_PAGES;
+        const isLocalStaticServer = window.location.port === '8000' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+        const isGitHubPagesHost = window.location.hostname.includes('github.io');
         
-        if (isGitHubPages || window.location.hostname.includes('github.io')) {
+        // Force GitHub Pages mode for static hosting or if not on Node.js server port
+        const isNodeJSServer = window.location.port === '3000';
+        
+        if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
+            console.log('🎵 Using GitHub Pages payment mode - static hosting detected');
             // GitHub Pages mode - use Stripe Payment Links or simplified flow
             return handleGitHubPagesPayment(booking);
         }
         
-        // Server mode - create payment intent
+        // Server mode - create payment intent (only when on port 3000)
+        console.log('🚀 Using server-side payment processing');
         const response = await fetch('/create-payment-intent', {
             method: 'POST',
             headers: {
