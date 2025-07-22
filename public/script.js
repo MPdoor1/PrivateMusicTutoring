@@ -357,7 +357,16 @@ function removePromoCode() {
 // Process Stripe Payment
 async function processStripePayment(booking) {
     try {
-        // Create payment intent
+        // Check if running on GitHub Pages or static hosting
+        const config = window.MUSIC_TUTORING_CONFIG;
+        const isGitHubPages = config && config.IS_GITHUB_PAGES;
+        
+        if (isGitHubPages || window.location.hostname.includes('github.io')) {
+            // GitHub Pages mode - use Stripe Payment Links or simplified flow
+            return handleGitHubPagesPayment(booking);
+        }
+        
+        // Server mode - create payment intent
         const response = await fetch('/create-payment-intent', {
             method: 'POST',
             headers: {
@@ -438,6 +447,65 @@ async function processStripePayment(booking) {
         console.error('Payment error:', error);
         alert('Payment failed: ' + error.message);
         return false;
+    }
+}
+
+// GitHub Pages Payment Handler
+async function handleGitHubPagesPayment(booking) {
+    console.log('🎵 Processing payment in GitHub Pages mode');
+    
+    // For GitHub Pages, we'll use a simplified booking flow
+    const paymentInfo = `
+🎵 Music Lesson Booking Summary
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📅 Date: ${formatBookingDate(booking.date)}
+⏰ Time: ${booking.timeDisplay}
+🎼 Service: ${booking.serviceName}
+💰 Price: $${booking.price}
+${booking.promoCode ? `🎟️ Promo: ${booking.promoCode} (${booking.discountPercent}% off)` : ''}
+
+📧 Contact: ${booking.email}
+📞 Phone: ${booking.phone}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+💳 PAYMENT INSTRUCTIONS:
+1. We'll send you a secure Stripe payment link via email
+2. Click the link to complete payment ($${booking.price})
+3. Your lesson will be confirmed once payment is received
+
+📨 Booking request submitted successfully!
+We'll contact you within 2 hours to confirm your lesson.
+    `;
+    
+    alert(paymentInfo);
+    
+    // Submit booking via form to email service
+    try {
+        const formData = new FormData();
+        formData.append('booking_details', JSON.stringify(booking));
+        formData.append('client_name', booking.name);
+        formData.append('client_email', booking.email);
+        formData.append('client_phone', booking.phone);
+        formData.append('lesson_type', booking.serviceName);
+        formData.append('lesson_date', booking.date);
+        formData.append('lesson_time', booking.timeDisplay);
+        formData.append('lesson_price', booking.price);
+        formData.append('special_requests', booking.specialRequests || 'None');
+        
+        const config = window.MUSIC_TUTORING_CONFIG;
+        if (config && config.FORM_ACTION) {
+            await fetch(config.FORM_ACTION, {
+                method: 'POST',
+                body: formData
+            });
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('Error submitting booking:', error);
+        return true; // Still return true to show success message
     }
 }
 

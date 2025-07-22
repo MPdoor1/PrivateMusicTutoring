@@ -59,24 +59,8 @@ function addHiddenField(form, name, value) {
     }
 }
 
-// Simplified payment handling
-function handleGitHubPagesPayment() {
-    // For GitHub Pages, we'll redirect to Stripe Payment Links or show payment instructions
-    const selectedService = document.getElementById('instrument')?.value;
-    const serviceOptions = window.serviceOptions || {};
-    
-    if (selectedService && serviceOptions[selectedService]) {
-        const service = serviceOptions[selectedService];
-        alert(`💳 Payment Required: $${service.price} for ${service.name}
-        
-🔗 For payments, please:
-1. Complete this form to send your booking request
-2. We'll send you a secure payment link via email
-3. Once payment is confirmed, we'll schedule your lesson
-
-Note: This is a demo version. For full payment integration, deploy to Vercel or Netlify.`);
-    }
-}
+// Payment handling is now integrated into main script.js
+// This function is no longer needed as it's been moved to script.js
 
 // Show success message after form submission
 function showBookingSuccess() {
