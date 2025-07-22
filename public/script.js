@@ -132,13 +132,8 @@ let stripePublishableKey;
 document.addEventListener('DOMContentLoaded', function() {
     const config = window.MUSIC_TUTORING_CONFIG;
     
-    // Use test key for GitHub Pages, live key for production server
-    if (config && config.IS_GITHUB_PAGES) {
-        stripePublishableKey = config.STRIPE_PUBLISHABLE_KEY;
-    } else {
-        // For server deployments, you can set the live key here or in environment
-        stripePublishableKey = 'pk_live_51RknYjGpt03TMvPV64qnnRVkH5GHluzHm6JINV4wFsdWkC5ur0ccsBN37JVA7LkLfmBOPe1Ts43mxxQ66VXxEwLY004cVijecC';
-    }
+    // Always use your live key for consistency
+    stripePublishableKey = 'pk_live_51RknYjGpt03TMvPV64qnnRVkH5GHluzHm6JINV4wFsdWkC5ur0ccsBN37JVA7LkLfmBOPe1Ts43mxxQ66VXxEwLY004cVijecC';
     
     if (stripePublishableKey && stripePublishableKey !== 'pk_test_your_stripe_publishable_key_here') {
         stripe = Stripe(stripePublishableKey);
@@ -388,10 +383,12 @@ async function processStripePayment(booking) {
         const isLocalStaticServer = window.location.port === '8000' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
         const isGitHubPagesHost = window.location.hostname.includes('github.io');
         
-        // Force GitHub Pages mode for static hosting or if not on Node.js server port
+        // Check if server endpoints are available (try to detect server mode)
         const isNodeJSServer = window.location.port === '3000';
+        const isServerMode = isNodeJSServer || window.location.hostname === 'localhost';
         
-        if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
+        // Only use GitHub Pages mode if explicitly on GitHub Pages or static hosting without server
+        if (isGitHubPagesHost || (isLocalStaticServer && !isServerMode)) {
             console.log('🎵 Using GitHub Pages payment mode - static hosting detected');
             // GitHub Pages mode - use Stripe Payment Links or simplified flow
             return handleGitHubPagesPayment(booking);
