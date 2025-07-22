@@ -5,7 +5,7 @@ const CONFIG = {
     // For production, you'll need to set up these services:
     
     // Stripe Configuration (use your publishable key)
-    STRIPE_PUBLISHABLE_KEY: 'pk_test_your_stripe_publishable_key_here', // Replace with your actual publishable key
+    STRIPE_PUBLISHABLE_KEY: 'pk_test_51RknYjGpt03TMvPVtN0v7HYl7RQJ7F0GQzN5zIjGJ7PwZO6yBVKB8vKF4CgtL7bV9LxL8ZzGd6NtdB7RQJ7F0000000001', // Test key for GitHub Pages
     
     // EmailJS Configuration for contact forms (replace with your EmailJS credentials)
     EMAILJS: {

@@ -124,9 +124,35 @@ const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY'; // You'll need to get this
 const EMAILJS_SERVICE_ID = 'service_music_lessons'; 
 const EMAILJS_TEMPLATE_ID = 'template_music_booking';
 
-// Stripe Configuration
-const stripe = Stripe('pk_live_51RknYjGpt03TMvPV64qnnRVkH5GHluzHm6JINV4wFsdWkC5ur0ccsBN37JVA7LkLfmBOPe1Ts43mxxQ66VXxEwLY004cVijecC');
-const elements = stripe.elements();
+// Stripe Configuration - Use config from config.js
+let stripe;
+let stripePublishableKey;
+
+// Initialize Stripe with proper key from config
+document.addEventListener('DOMContentLoaded', function() {
+    const config = window.MUSIC_TUTORING_CONFIG;
+    
+    // Use test key for GitHub Pages, live key for production server
+    if (config && config.IS_GITHUB_PAGES) {
+        stripePublishableKey = config.STRIPE_PUBLISHABLE_KEY;
+    } else {
+        // For server deployments, you can set the live key here or in environment
+        stripePublishableKey = 'pk_live_51RknYjGpt03TMvPV64qnnRVkH5GHluzHm6JINV4wFsdWkC5ur0ccsBN37JVA7LkLfmBOPe1Ts43mxxQ66VXxEwLY004cVijecC';
+    }
+    
+    if (stripePublishableKey && stripePublishableKey !== 'pk_test_your_stripe_publishable_key_here') {
+        stripe = Stripe(stripePublishableKey);
+        elements = stripe.elements();
+        console.log('✅ Stripe initialized with key:', stripePublishableKey.substring(0, 20) + '...');
+        
+        // Initialize Stripe Elements after Stripe is ready
+        initializeStripeElements();
+    } else {
+        console.warn('⚠️ Stripe publishable key not configured properly');
+    }
+});
+
+let elements;
 let cardElement = null;
 
 // Initialize EmailJS
@@ -139,8 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('EmailJS not loaded - using fallback email system');
     }
     
-    // Initialize Stripe Elements
-    initializeStripeElements();
+    // Stripe Elements will be initialized after Stripe is loaded
 });
 
 // Service options with Stripe product IDs and pricing - All lessons are $40 for 30 minutes
@@ -165,7 +190,7 @@ console.log('Service options loaded:', serviceOptions);
 
 // Stripe Elements initialization
 function initializeStripeElements() {
-    if (!cardElement) {
+    if (!cardElement && stripe && elements) {
         const style = {
             base: {
                 fontSize: '16px',
