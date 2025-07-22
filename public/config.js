@@ -14,13 +14,31 @@ const CONFIG = {
         TEMPLATE_ID: 'template_booking_confirmation'
     },
     
-    // Netlify Forms or FormSubmit.co for form handling (alternative to server-side processing)
-    FORM_ACTION: 'https://formsubmit.co/mpdoor1@gmail.com', // Updated with your email
+    // FormSubmit Configuration - Multiple options for reliability
+    FORM_ACTION: 'https://formsubmit.co/mpdoor1@gmail.com', // Primary form handler
+    FORM_BACKUP: 'https://getform.io/f/your-form-id', // Backup option (sign up at getform.io)
     
-    // For advanced booking functionality, consider using:
-    // - Calendly API for scheduling
-    // - Stripe Payment Links for simplified payments
-    // - Zapier for automation
+    // FormSubmit Hidden Fields for better functionality
+    FORM_CONFIG: {
+        '_subject': '🎵 New Music Lesson Booking Request',
+        '_captcha': 'false',
+        '_template': 'table',
+        '_next': 'https://mpdoor1.github.io/PrivateMusicTutoring#booking-success',
+        '_cc': 'mpdoor1@gmail.com', // CC to ensure you get a copy
+        '_autoresponse': 'Thank you for your music lesson booking request! We will contact you within 2 hours to confirm your lesson and send payment details.'
+    },
+    
+    // Alternative Services (if you want to switch later)
+    ALTERNATIVES: {
+        // Netlify Forms (if you deploy to Netlify instead)
+        netlify: 'Built-in form handling',
+        
+        // Zapier Email (webhook approach)
+        zapier: 'https://hooks.zapier.com/hooks/catch/your-webhook-id',
+        
+        // EmailJS (client-side email sending)
+        emailjs_service: 'service_music_tutoring'
+    },
     
     // GitHub Pages deployment note:
     // This is a client-side only version. For full functionality including:

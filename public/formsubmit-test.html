@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormSubmit Activation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background: #005a87;
+        }
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007cba;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 FormSubmit Activation Test</h1>
+        
+        <div class="info">
+            <strong>📧 Instructions:</strong><br>
+            1. Fill out this form and click "Activate FormSubmit"<br>
+            2. Check your email (mpdoor1@gmail.com) for a confirmation link<br>
+            3. Click the confirmation link to activate FormSubmit<br>
+            4. After activation, your main booking form will work properly!
+        </div>
+
+        <form action="https://formsubmit.co/mpdoor1@gmail.com" method="POST">
+            <!-- FormSubmit Configuration -->
+            <input type="hidden" name="_subject" value="🎵 FormSubmit Activation Test">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://mpdoor1.github.io/PrivateMusicTutoring/public/formsubmit-test.html#success">
+            <input type="hidden" name="_cc" value="mpdoor1@gmail.com">
+            
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" value="Site Owner Test" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" value="mpdoor1@gmail.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Test Message:</label>
+                <textarea id="message" name="message" rows="4" required>This is a test submission to activate FormSubmit for the music tutoring website. Please confirm this email to complete the activation process.</textarea>
+            </div>
+            
+            <button type="submit">Activate FormSubmit</button>
+        </form>
+        
+        <div id="success-message" class="success" style="display: none;">
+            <strong>✅ Test Form Submitted!</strong><br>
+            Check your email for the FormSubmit confirmation link. Once you click it, FormSubmit will be activated for your site!
+        </div>
+    </div>
+
+    <script>
+        // Show success message if redirected with #success
+        if (window.location.hash === '#success') {
+            document.getElementById('success-message').style.display = 'block';
+            // Scroll to success message
+            document.getElementById('success-message').scrollIntoView();
+        }
+    </script>
+</body>
+</html> 
