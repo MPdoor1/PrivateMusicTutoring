@@ -5,7 +5,7 @@ const CONFIG = {
     // For production, you'll need to set up these services:
     
     // Stripe Configuration (your live publishable key)
-    STRIPE_PUBLISHABLE_KEY: 'pk_live_51RknYjGpt03TMvPV64qnnRVkH5GHluzHm6JINV4wFsdWkC5ur0ccsBN37JVA7LkLfmBOPe1Ts43mxxQ66VXxEwLY004cVijecC', // Your live key
+    STRIPE_PUBLISHABLE_KEY: 'pk_live_51NSMAqAAsTLO19Q2rkkIYPiKDOjsq4p6lcyHoyyT8m4JGAr9vpUBpCwyrFehTupYIvC8rxll8TtM9TckuBZYu4jB00kC1rEe1x', // Your live key
     
     // EmailJS Configuration for contact forms (replace with your EmailJS credentials)
     EMAILJS: {

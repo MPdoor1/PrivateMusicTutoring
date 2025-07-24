@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const config = window.MUSIC_TUTORING_CONFIG;
     
     // Always use your live key for consistency
-    stripePublishableKey = 'pk_live_51RknYjGpt03TMvPV64qnnRVkH5GHluzHm6JINV4wFsdWkC5ur0ccsBN37JVA7LkLfmBOPe1Ts43mxxQ66VXxEwLY004cVijecC';
+    stripePublishableKey = 'pk_live_51NSMAqAAsTLO19Q2rkkIYPiKDOjsq4p6lcyHoyyT8m4JGAr9vpUBpCwyrFehTupYIvC8rxll8TtM9TckuBZYu4jB00kC1rEe1x';
     
     if (stripePublishableKey && stripePublishableKey !== 'pk_test_your_stripe_publishable_key_here') {
         stripe = Stripe(stripePublishableKey);

@@ -403,25 +403,27 @@ const createBusinessNotificationEmail = (bookingData, meetingLink = null) => {
   
   return {
             to: 'mpdoor1@gmail.com', // Send to Gmail only (single email)
-    from: 'musictutoringfl@musictutoringfl.com',
-    subject: `🔔 NEW LESSON BOOKING - ${bookingData.client_name} - ${bookingData.booking_id}`,
+    from: 'mpdoor1@gmail.com',
+    replyTo: 'mpdoor1@gmail.com',
+    subject: `🎵 NEW MUSIC LESSON BOOKING - ${bookingData.client_name} - ${bookingData.booking_id}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: #28a745; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
-          <h2 style="margin: 0;">🎉 NEW BOOKING RECEIVED!</h2>
-          <p style="margin: 10px 0 0 0; font-size: 16px;">Someone just scheduled a meeting with you</p>
+        <div style="background: #C56C3A; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
+          <h2 style="margin: 0;">🎵 NEW MUSIC LESSON BOOKING!</h2>
+          <p style="margin: 10px 0 0 0; font-size: 16px;">Someone just scheduled a music lesson with you</p>
         </div>
         
         <div style="background: #f8f9fa; padding: 25px; border-radius: 0 0 8px 8px;">
-          <h3 style="color: #dc3545; margin-top: 0;">📋 BOOKING DETAILS</h3>
+          <h3 style="color: #C56C3A; margin-top: 0;">📋 LESSON DETAILS</h3>
           <div style="background: white; padding: 20px; border-radius: 8px; margin: 15px 0;">
             <ul style="list-style: none; padding: 0; margin: 0;">
-              <li style="margin: 10px 0;"><strong>👤 Client:</strong> ${bookingData.client_name}</li>
+              <li style="margin: 10px 0;"><strong>🎓 Student:</strong> ${bookingData.client_name}</li>
               <li style="margin: 10px 0;"><strong>📧 Email:</strong> ${bookingData.email}</li>
               <li style="margin: 10px 0;"><strong>📞 Phone:</strong> ${bookingData.phone || 'Not provided'}</li>
               <li style="margin: 10px 0;"><strong>📅 Date & Time:</strong> ${cleanDateTime}</li>
-              <li style="margin: 10px 0;"><strong>💼 Service:</strong> ${bookingData.service_name}</li>
-              <li style="margin: 10px 0;"><strong>💰 Amount:</strong> $${bookingData.price} (PAID)</li>
+              <li style="margin: 10px 0;"><strong>🎵 Lesson Type:</strong> ${bookingData.service_name}</li>
+              <li style="margin: 10px 0;"><strong>💰 Price:</strong> $${bookingData.price} (PAID)</li>
+              <li style="margin: 10px 0;"><strong>📍 Location/Instrument:</strong> ${bookingData.special_requests || 'Not specified'}</li>
               <li style="margin: 10px 0;"><strong>🆔 Booking ID:</strong> ${bookingData.booking_id}</li>
             </ul>
           </div>
@@ -443,10 +445,10 @@ const createBusinessNotificationEmail = (bookingData, meetingLink = null) => {
           <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
             <h4 style="color: #1976d2; margin: 0 0 10px 0;">⏰ Next Steps:</h4>
             <ul style="margin: 0; padding-left: 20px;">
-              <li>Client will receive their confirmation email automatically</li>
-              <li>Meeting link is active NOW and sent to client immediately</li>
-              <li>Client will upload documents via Proof.com</li>
-              <li>Be ready to join the meeting at scheduled time</li>
+              <li>Student will receive their confirmation email automatically</li>
+              <li>For online lessons: Use WhatsApp video call (904-607-3835)</li>
+              <li>For travelling lessons: Go to student's location</li>
+              <li>Have your teaching materials ready</li>
             </ul>
           </div>
           
@@ -478,30 +480,28 @@ const createBookingConfirmationEmail = (bookingData, meetingLink = null, isBusin
     clean_datetime: cleanDateTime
   });
   
-  const meetingLinkSection = meetingLink ? `
-            <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
-          <h3 style="color: #2e7d32; margin-top: 0;">🎥 LIVE NOTARY MEETING LINK - READY NOW!</h3>
-          <div style="background: #fff; padding: 15px; border-radius: 5px; margin: 10px 0; border-left: 4px solid #4caf50;">
-            <p style="margin: 0 0 10px 0; font-weight: bold; color: #2e7d32;">✅ Your meeting link is ready and active now!</p>
-            <p style="margin: 0 0 15px 0; font-size: 14px; color: #666;">
-              <strong>Scheduled for:</strong> ${cleanDateTime}
+  // Music lessons don't need meeting links like notary services
+  const contactSection = `
+        <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+          <h3 style="color: #C56C3A; margin-top: 0;">📞 CONTACT INFORMATION</h3>
+          <div style="background: #fff; padding: 15px; border-radius: 5px; margin: 10px 0; border-left: 4px solid #C56C3A;">
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #C56C3A;">📅 Your lesson is scheduled for ${cleanDateTime}</p>
+            <p style="margin: 0 0 15px 0; font-size: 16px; color: #333;">
+              <strong>📞 Call/Text:</strong> (904) 607-3835<br>
+              <strong>📧 Email:</strong> mpdoor1@gmail.com<br>
+              <strong>📱 WhatsApp Video:</strong> For online lessons
             </p>
-            <a href="${meetingLink}" style="display: inline-block; background: #4caf50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Join Live Notary Meeting</a>
           </div>
-          <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">
-            Meeting Link: <code style="background: #f5f5f5; padding: 3px; border-radius: 3px; word-break: break-all;">${meetingLink}</code>
-          </p>
         </div>
-  ` : '';
+  `;
 
-  const recipient = isBusinessCopy ? 'remotenotaryfl@remotenotaryfl.com' : bookingData.email;
-  const subjectPrefix = isBusinessCopy ? '[BUSINESS COPY] ' : '';
-
+  const recipient = bookingData.email; // Always send to student
+  
   return {
     to: recipient,
-    from: 'musictutoringfl@musictutoringfl.com',
-    replyTo: 'musictutoringfl@musictutoringfl.com',
-    subject: `${subjectPrefix}✅ ${bookingData.service_name} Appointment Confirmed - ${bookingData.booking_id}`,
+    from: 'mpdoor1@gmail.com',
+    replyTo: 'mpdoor1@gmail.com',
+    subject: `🎵 Music Lesson Confirmed - ${bookingData.service_name} - ${bookingData.booking_id}`,
     headers: {
       'X-Priority': '1',
       'X-MSMail-Priority': 'High',
@@ -509,67 +509,60 @@ const createBookingConfirmationEmail = (bookingData, meetingLink = null, isBusin
     },
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #2c3e50;">Appointment Confirmed!</h2>
+        <h2 style="color: #C56C3A;">🎵 Music Lesson Confirmed!</h2>
         
         <p>Dear ${bookingData.client_name},</p>
         
-        <p>Your ${bookingData.service_name.toLowerCase()} appointment has been successfully scheduled and paid for!</p>
+        <p>Your ${bookingData.service_name.toLowerCase()} has been successfully scheduled and paid for!</p>
         
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #495057; margin-top: 0;">📅 APPOINTMENT DETAILS</h3>
+          <h3 style="color: #C56C3A; margin-top: 0;">📅 LESSON DETAILS</h3>
           <ul style="list-style: none; padding: 0;">
             <li><strong>Date & Time:</strong> ${cleanDateTime}</li>
-            <li><strong>Service:</strong> ${bookingData.service_name}</li>
+            <li><strong>Lesson Type:</strong> ${bookingData.service_name}</li>
             <li><strong>Price:</strong> $${bookingData.price} (PAID)</li>
+            <li><strong>Location/Instrument:</strong> ${bookingData.special_requests || 'Not specified'}</li>
             <li><strong>Booking ID:</strong> ${bookingData.booking_id}</li>
           </ul>
         </div>
         
-        ${meetingLinkSection}
+        ${contactSection}
         
-        <div style="background: #fff3e0; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ff9800;">
-          <h3 style="color: #f57c00; margin-top: 0;">📄 DOCUMENT UPLOAD PROCESS</h3>
-          <p><strong>You will receive a separate email from Proof.com with a link to the meeting platform.</strong></p>
-          <p><strong>IMPORTANT:</strong> The system may show a "test document" as a placeholder - this is normal. <strong>During your live meeting, you will upload the actual documents you need notarized.</strong></p>
-          <p>Simply follow the steps provided in the Proof.com email to access your meeting room when it's time for your appointment.</p>
-        </div>
-        
-        <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1976d2; margin-top: 0;">📋 LIVE MEETING PREPARATION</h3>
+        <div style="background: #fff3e0; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #C56C3A;">
+          <h3 style="color: #C56C3A; margin-top: 0;">🎼 LESSON PREPARATION</h3>
+          <p><strong>Please prepare for your music lesson:</strong></p>
           <ul>
-            <li><strong>Valid government-issued photo ID</strong> (driver's license, passport, etc.)</li>
-            <li><strong>Secondary photo ID</strong> (required for enhanced verification)</li>
-            <li><strong>Original documents</strong> to be notarized (physical copies)</li>
-            <li><strong>Stable internet connection</strong> for video quality</li>
-            <li><strong>Computer/device with working camera and microphone</strong></li>
-            <li><strong>Quiet, well-lit environment</strong> for the video call</li>
-            <li><strong>Be prepared to show documents clearly</strong> to the camera</li>
+            <li><strong>Have your instrument ready</strong> (tuned and accessible)</li>
+            <li><strong>Prepare practice space</strong> with good lighting and minimal distractions</li>
+            <li><strong>For online lessons:</strong> Ensure stable internet and WhatsApp access</li>
+            <li><strong>For travelling lessons:</strong> Have your address/location ready to share</li>
+            <li><strong>Bring any music books</strong> or materials you'd like to work on</li>
           </ul>
         </div>
         
-        <div style="background: #f3e5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #7b1fa2; margin-top: 0;">🎥 LIVE NOTARY MEETING DETAILS</h3>
+        <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #1976d2; margin-top: 0;">📋 NEXT STEPS</h3>
           <ul>
             <li>✅ <strong>Payment of $${bookingData.price} has been processed successfully</strong></li>
-            <li>🎥 <strong>This is a LIVE video meeting with a licensed notary</strong></li>
-            <li>🔗 ${meetingLink ? 'Your meeting link is ready above and active NOW!' : 'Meeting link will be provided with this confirmation'}</li>
-            <li>⏰ <strong>Please join 5 minutes early for technical checks</strong></li>
-            <li>🆔 <strong>Have both photo IDs ready to show on camera</strong></li>
-            <li>📄 <strong>Original documents must be physically present</strong></li>
-            <li>📱 A reminder will be sent 1 hour before your session</li>
+            <li>🎵 <strong>Your 30-minute private music lesson is confirmed</strong></li>
+            <li>📞 <strong>I will contact you via phone/WhatsApp before your lesson</strong></li>
+            <li>⏰ <strong>Please be ready 5 minutes before your scheduled time</strong></li>
+            <li>🎼 <strong>Have your instrument and any music materials ready</strong></li>
+            <li>📱 <strong>For online lessons: WhatsApp video call at (904) 607-3835</strong></li>
           </ul>
         </div>
         
         <div style="margin: 20px 0;">
-          <p><strong>📞 CONTACT INFO:</strong></p>
-          <p>Phone: ${bookingData.phone}<br>
-          Special Requests: ${bookingData.special_requests}</p>
+          <p><strong>📞 YOUR CONTACT INFO:</strong></p>
+          <p>Phone: ${bookingData.phone || 'Not provided'}<br>
+          ${bookingData.special_requests ? `Location/Instrument: ${bookingData.special_requests}` : ''}</p>
         </div>
         
-        <p>If you need to reschedule or have questions, please contact us immediately.</p>
+        <p>If you need to reschedule or have questions, please call/text me at (904) 607-3835 or email mpdoor1@gmail.com.</p>
         
-        <p>Best regards,<br>
-        <strong>Music Tutoring Services Team</strong></p>
+        <p>Looking forward to making music with you!<br>
+        <strong>Private Music Tutoring Services</strong><br>
+        Jacksonville, FL</p>
       </div>
     `
   };
