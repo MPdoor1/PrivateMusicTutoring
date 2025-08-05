@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Stripe Elements will be initialized after Stripe is loaded
 });
 
-// Service options with Stripe product IDs and pricing - All lessons are $40 for 30 minutes
+// Service options with Stripe product IDs and pricing
 const serviceOptions = {
     'online': {
         name: 'Private Lesson Online',
@@ -178,6 +178,13 @@ const serviceOptions = {
         duration: '30 minutes',
         productId: 'prod_Sir9UM9pXwEdl2', // Same product ID for both
         description: 'Private music lesson at your location - any instrument'
+    },
+    'test': {
+        name: 'Test Service',
+        price: 1,
+        duration: 'Testing',
+        productId: 'prod_SoV04nXT5LK8vG', // Test product ID
+        description: 'Test service for $1 - testing purposes only'
     }
 };
 
@@ -1847,55 +1854,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }); // Force redeploy
 
-// Service pricing and booking form handling
-document.addEventListener('DOMContentLoaded', function() {
-    const instrumentSelect = document.getElementById('instrument');
-    
-    if (instrumentSelect) {
-        // Update pricing when service changes
-        instrumentSelect.addEventListener('change', updatePricing);
-        
-        // Set initial pricing when modal opens
-        setTimeout(updatePricing, 100);
-    }
-    
-    function updatePricing() {
-        const selectedService = instrumentSelect.value;
-        let price = 40; // Default price
-        
-        // Set price based on selected service
-        switch(selectedService) {
-            case 'online':
-            case 'travelling':
-                price = 40;
-                break;
-            case 'test':
-                price = 1;
-                break;
-            default:
-                price = 40;
-        }
-        
-        // Update payment amount displays
-        const paymentAmount = document.getElementById('paymentAmount');
-        const paymentSubtotal = document.getElementById('paymentSubtotal');
-        
-        if (paymentAmount) {
-            paymentAmount.textContent = price;
-        }
-        if (paymentSubtotal) {
-            paymentSubtotal.textContent = price;
-        }
-        
-        // Store the price for payment processing
-        window.currentServicePrice = price;
-        
-        console.log(`💰 Service pricing updated: ${selectedService} = $${price}`);
-    }
-    
-    // Make updatePricing available globally
-    window.updatePricing = updatePricing;
-});
+// Service pricing is now handled by the existing updatePaymentAmount function
 
 // Modal functions for booking
 function openBookingModal() {
@@ -1906,9 +1865,7 @@ function openBookingModal() {
         
         // Initialize pricing when modal opens
         setTimeout(() => {
-            if (window.updatePricing) {
-                window.updatePricing();
-            }
+            updatePaymentAmount();
         }, 100);
     }
 }
