@@ -1847,4 +1847,134 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }); // Force redeploy
 
+// Service pricing and booking form handling
+document.addEventListener('DOMContentLoaded', function() {
+    const instrumentSelect = document.getElementById('instrument');
+    const paymentAmountElements = document.querySelectorAll('#paymentAmount, #paymentSubtotal');
+    
+    if (instrumentSelect) {
+        // Set initial pricing
+        updatePricing();
+        
+        // Update pricing when service changes
+        instrumentSelect.addEventListener('change', updatePricing);
+    }
+    
+    function updatePricing() {
+        const selectedService = instrumentSelect.value;
+        let price = 40; // Default price
+        
+        // Set price based on selected service
+        switch(selectedService) {
+            case 'online':
+            case 'travelling':
+                price = 40;
+                break;
+            case 'test':
+                price = 1;
+                break;
+            default:
+                price = 40;
+        }
+        
+        // Update all payment amount displays
+        paymentAmountElements.forEach(element => {
+            if (element) {
+                element.textContent = price;
+            }
+        });
+        
+        // Store the price for payment processing
+        window.currentServicePrice = price;
+        
+        console.log(`💰 Service pricing updated: ${selectedService} = $${price}`);
+    }
+});
+
+// Modal functions for booking
+function openBookingModal() {
+    const modal = document.getElementById('bookingModal');
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Initialize pricing when modal opens
+        const instrumentSelect = document.getElementById('instrument');
+        if (instrumentSelect) {
+            const event = new Event('change');
+            instrumentSelect.dispatchEvent(event);
+        }
+    }
+}
+
+function closeBookingModal() {
+    const modal = document.getElementById('bookingModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Enhanced booking form submission for server-side processing
+async function submitBookingForm(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    // Get the current service price
+    const servicePrice = window.currentServicePrice || 40;
+    const serviceName = form.instrument.options[form.instrument.selectedIndex].text;
+    
+    try {
+        // Create payment intent
+        const paymentResponse = await fetch('/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: servicePrice,
+                currency: 'usd',
+                booking_id: 'MUSIC-' + Date.now(),
+                product_id: getProductId(form.instrument.value),
+                service_name: serviceName
+            })
+        });
+        
+        const paymentResult = await paymentResponse.json();
+        
+        if (paymentResult.success) {
+            // Process payment with Stripe (this would integrate with your existing Stripe code)
+            console.log('💳 Payment intent created:', paymentResult.clientSecret);
+            // Here you would integrate with your existing Stripe payment processing
+        } else {
+            throw new Error(paymentResult.message || 'Failed to create payment intent');
+        }
+        
+    } catch (error) {
+        console.error('❌ Booking submission failed:', error);
+        alert('Booking failed: ' + error.message);
+    }
+}
+
+function getProductId(serviceType) {
+    switch(serviceType) {
+        case 'test':
+            return 'prod_SoV04nXT5LK8vG';
+        case 'online':
+        case 'travelling':
+        default:
+            return 'prod_music_lesson'; // Your main music lesson product ID
+    }
+}
+
+// Initialize booking form if it exists
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', submitBookingForm);
+    }
+});
+
 // Address field is now always visible - no toggle needed

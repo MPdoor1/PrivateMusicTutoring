@@ -6,10 +6,10 @@ Create a `.env` file in your project root with these values:
 
 ```bash
 # Stripe Configuration (for payments)
-STRIPE_SECRET_KEY=sk_live_your_actual_stripe_secret_key
+STRIPE_SECRET_KEY=your_stripe_secret_key_here
 
 # SendGrid Configuration (for email notifications)  
-SENDGRID_API_KEY=SG.your_sendgrid_api_key
+SENDGRID_API_KEY=your_sendgrid_api_key_here
 
 # Email Configuration
 BUSINESS_EMAIL=mpdoor1@gmail.com
