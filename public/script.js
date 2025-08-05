@@ -252,6 +252,10 @@ function updatePaymentAmount() {
     if (serviceType && serviceOptions[serviceType]) {
         const originalPrice = serviceOptions[serviceType].price;
         console.log('✅ Found service:', serviceType, 'price:', originalPrice);
+        
+        // Set global variable for payment processing
+        window.currentServicePrice = originalPrice;
+        
         if (paymentSubtotal) {
             paymentSubtotal.textContent = originalPrice;
             console.log('✅ Updated subtotal to:', originalPrice);
@@ -261,6 +265,9 @@ function updatePaymentAmount() {
         if (appliedPromoCode && promoCodeDiscount > 0) {
             const discount = originalPrice * (promoCodeDiscount / 100);
             const finalPrice = originalPrice - discount;
+            
+            // Update global variable with discounted price
+            window.currentServicePrice = finalPrice;
             
             if (discountAmount) discountAmount.textContent = discount.toFixed(2);
             if (paymentAmount) paymentAmount.textContent = finalPrice.toFixed(2);
@@ -273,24 +280,19 @@ function updatePaymentAmount() {
             if (discountLine) discountLine.style.display = 'none';
         }
     } else {
-        // Default to 40 (our standard price) if no service is selected
-        console.log('Service not found, defaulting to $40');
+        // No service selected - show placeholder or wait for selection
+        console.log('No service selected yet');
+        
+        // Clear global variable
+        window.currentServicePrice = null;
+        
         if (paymentSubtotal) {
-            paymentSubtotal.textContent = '40';
-            console.log('Set subtotal to 40');
+            paymentSubtotal.textContent = '--';
         }
         if (paymentAmount) {
-            paymentAmount.textContent = '40';
-            console.log('Set amount to 40');
+            paymentAmount.textContent = '--';
         }
         if (discountLine) discountLine.style.display = 'none';
-        
-        // Force visible update for debugging
-        const testDiv = document.createElement('div');
-        testDiv.style.cssText = 'position: fixed; top: 10px; right: 10px; background: red; color: white; padding: 10px; z-index: 9999;';
-        testDiv.textContent = 'Payment Update Called - Check Total!';
-        document.body.appendChild(testDiv);
-        setTimeout(() => testDiv.remove(), 3000);
     }
 }
 
@@ -1886,7 +1888,12 @@ async function submitBookingForm(event) {
     const formData = new FormData(form);
     
     // Get the current service price
-    const servicePrice = window.currentServicePrice || 40;
+    const servicePrice = window.currentServicePrice;
+    
+    if (!servicePrice) {
+        alert('Please select a lesson type before proceeding with payment.');
+        return;
+    }
     const serviceName = form.instrument.options[form.instrument.selectedIndex].text;
     
     try {
