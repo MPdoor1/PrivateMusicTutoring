@@ -1850,14 +1850,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // Service pricing and booking form handling
 document.addEventListener('DOMContentLoaded', function() {
     const instrumentSelect = document.getElementById('instrument');
-    const paymentAmountElements = document.querySelectorAll('#paymentAmount, #paymentSubtotal');
     
     if (instrumentSelect) {
-        // Set initial pricing
-        updatePricing();
-        
         // Update pricing when service changes
         instrumentSelect.addEventListener('change', updatePricing);
+        
+        // Set initial pricing when modal opens
+        setTimeout(updatePricing, 100);
     }
     
     function updatePricing() {
@@ -1877,18 +1876,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 price = 40;
         }
         
-        // Update all payment amount displays
-        paymentAmountElements.forEach(element => {
-            if (element) {
-                element.textContent = price;
-            }
-        });
+        // Update payment amount displays
+        const paymentAmount = document.getElementById('paymentAmount');
+        const paymentSubtotal = document.getElementById('paymentSubtotal');
+        
+        if (paymentAmount) {
+            paymentAmount.textContent = price;
+        }
+        if (paymentSubtotal) {
+            paymentSubtotal.textContent = price;
+        }
         
         // Store the price for payment processing
         window.currentServicePrice = price;
         
         console.log(`💰 Service pricing updated: ${selectedService} = $${price}`);
     }
+    
+    // Make updatePricing available globally
+    window.updatePricing = updatePricing;
 });
 
 // Modal functions for booking
@@ -1899,11 +1905,11 @@ function openBookingModal() {
         document.body.style.overflow = 'hidden';
         
         // Initialize pricing when modal opens
-        const instrumentSelect = document.getElementById('instrument');
-        if (instrumentSelect) {
-            const event = new Event('change');
-            instrumentSelect.dispatchEvent(event);
-        }
+        setTimeout(() => {
+            if (window.updatePricing) {
+                window.updatePricing();
+            }
+        }, 100);
     }
 }
 
@@ -1965,7 +1971,7 @@ function getProductId(serviceType) {
         case 'online':
         case 'travelling':
         default:
-            return 'prod_music_lesson'; // Your main music lesson product ID
+            return 'prod_SoV04nXT5LK8vG'; // Using the same product for now - you can create separate products later
     }
 }
 

@@ -102,4 +102,5 @@ dist
 .tern-port
 
 # Private API keys (do not commit)
-PRIVATE_API_KEYS.txt 
+PRIVATE_API_KEYS.txt
+PRODUCTION_SETUP.md 
