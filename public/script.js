@@ -150,15 +150,9 @@ document.addEventListener('DOMContentLoaded', function() {
 let elements;
 let cardElement = null;
 
-// Initialize EmailJS
+// EmailJS disabled - using FormSubmit for GitHub Pages compatibility
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS with public key (when you get your actual key)
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-        console.log('EmailJS initialized for music lesson confirmations');
-    } else {
-        console.log('EmailJS not loaded - using fallback email system');
-    }
+    console.log('EmailJS disabled - using FormSubmit fallback for all email handling');
     
     // Stripe Elements will be initialized after Stripe is loaded
 });
@@ -1285,6 +1279,46 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Check if running on GitHub Pages or static hosting
+            const config = window.MUSIC_TUTORING_CONFIG;
+            const isGitHubPages = config && config.IS_GITHUB_PAGES;
+            const isLocalStaticServer = window.location.port === '8000' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+            const isGitHubPagesHost = window.location.hostname.includes('github.io');
+            const isNodeJSServer = window.location.port === '3000';
+            
+            // Use GitHub Pages mode for: GitHub Pages hosting, local static server, or when explicitly configured
+            if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
+                console.log('🎵 GitHub Pages mode detected - allowing normal form submission');
+                
+                // Validate required fields before allowing submission
+                const formData = new FormData(e.target);
+                const selectedTimeSlot = document.querySelector('.time-slot.selected');
+                
+                if (!selectedTimeSlot) {
+                    alert('Please select a time slot');
+                    return;
+                }
+                
+                // Validate email addresses
+                const emailValidation = validateAllEmails();
+                if (!emailValidation.valid) {
+                    alert(emailValidation.message);
+                    return;
+                }
+                
+                // Add time slot data to form
+                const timeSlotInput = document.createElement('input');
+                timeSlotInput.type = 'hidden';
+                timeSlotInput.name = 'selected_time_slot';
+                timeSlotInput.value = selectedTimeSlot.dataset.time;
+                e.target.appendChild(timeSlotInput);
+                
+                // Allow form to submit normally to FormSubmit
+                e.target.submit();
+                return;
+            }
+            
+            // Server mode processing (only for Node.js server)
             const formData = new FormData(e.target);
             const selectedTimeSlot = document.querySelector('.time-slot.selected');
             
@@ -1954,12 +1988,7 @@ function getProductId(serviceType) {
     }
 }
 
-// Initialize booking form if it exists
-document.addEventListener('DOMContentLoaded', function() {
-    const bookingForm = document.getElementById('bookingForm');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', submitBookingForm);
-    }
-});
+// Note: Form submission is now handled by the main event listener in the DOM ready function above
+// This duplicate handler has been removed to prevent double submission
 
 // Address field is now always visible - no toggle needed
