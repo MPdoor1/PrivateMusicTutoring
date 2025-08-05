@@ -111,6 +111,21 @@ const formatTimeForJacksonville = (timeString) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// CORS middleware for GitHub Pages
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://mpdoor1.github.io');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
