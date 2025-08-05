@@ -2,7 +2,8 @@
 // Since GitHub Pages doesn't support server-side functionality, we'll use external services
 
 const CONFIG = {
-    // For production, you'll need to set up these services:
+    // FREE Azure Server for payment processing
+    SERVER_URL: 'https://music-tutoring-payments-free.azurewebsites.net',
     
     // Stripe Configuration (your live publishable key)
     STRIPE_PUBLISHABLE_KEY: 'pk_live_51NSMAqAAsTLO19Q2rkkIYPiKDOjsq4p6lcyHoyyT8m4JGAr9vpUBpCwyrFehTupYIvC8rxll8TtM9TckuBZYu4jB00kC1rEe1x', // Your live key
