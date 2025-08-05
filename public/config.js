@@ -7,9 +7,9 @@ const CONFIG = {
     // Stripe Configuration (your live publishable key)
     STRIPE_PUBLISHABLE_KEY: 'pk_live_51NSMAqAAsTLO19Q2rkkIYPiKDOjsq4p6lcyHoyyT8m4JGAr9vpUBpCwyrFehTupYIvC8rxll8TtM9TckuBZYu4jB00kC1rEe1x', // Your live key
     
-    // EmailJS Configuration for contact forms (replace with your EmailJS credentials)
+    // EmailJS Configuration for contact forms (disabled - using FormSubmit instead)
     EMAILJS: {
-        PUBLIC_KEY: 'your_emailjs_public_key',
+        PUBLIC_KEY: '', // Disabled - using FormSubmit fallback
         SERVICE_ID: 'service_music_tutoring',
         TEMPLATE_ID: 'template_booking_confirmation'
     },

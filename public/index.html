@@ -365,7 +365,7 @@
                     </div>
                 </div>
 
-                <form id="bookingForm">
+                <form id="bookingForm" action="https://formsubmit.co/mpdoor1@gmail.com" method="POST">
                     <div class="form-group">
                         <label for="clientName">Full Name *</label>
                         <input type="text" id="clientName" name="clientName" required>
@@ -476,6 +476,14 @@
                         </div>
                         <div id="promo-message" class="promo-message"></div>
                     </div>
+                    
+                    <!-- FormSubmit Configuration Fields -->
+                    <input type="hidden" name="_subject" value="🎵 New Music Lesson Booking Request">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://mpdoor1.github.io/PrivateMusicTutoring/#booking-success">
+                    <input type="hidden" name="_cc" value="mpdoor1@gmail.com">
+                    <input type="hidden" name="_autoresponse" value="Thank you for your music lesson booking request! We will contact you within 2 hours to confirm your lesson and send payment details.">
                     
                     <div class="form-actions">
                         <button type="button" class="btn-secondary" onclick="closeBookingModal()">Cancel</button>

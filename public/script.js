@@ -394,10 +394,9 @@ async function processStripePayment(booking) {
         
         // Check if server endpoints are available (try to detect server mode)
         const isNodeJSServer = window.location.port === '3000';
-        const isServerMode = isNodeJSServer || window.location.hostname === 'localhost';
         
-        // Only use GitHub Pages mode if explicitly on GitHub Pages or static hosting without server
-        if (isGitHubPagesHost || (isLocalStaticServer && !isServerMode)) {
+        // Use GitHub Pages mode for: GitHub Pages hosting, local static server, or when explicitly configured
+        if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
             console.log('🎵 Using GitHub Pages payment mode - static hosting detected');
             // GitHub Pages mode - use Stripe Payment Links or simplified flow
             return handleGitHubPagesPayment(booking);
@@ -1896,8 +1895,24 @@ async function submitBookingForm(event) {
     }
     const serviceName = form.instrument.options[form.instrument.selectedIndex].text;
     
+    // Check if running on GitHub Pages or static hosting
+    const config = window.MUSIC_TUTORING_CONFIG;
+    const isGitHubPages = config && config.IS_GITHUB_PAGES;
+    const isLocalStaticServer = window.location.port === '8000' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+    const isGitHubPagesHost = window.location.hostname.includes('github.io');
+    const isNodeJSServer = window.location.port === '3000';
+    
+    // Use GitHub Pages mode for: GitHub Pages hosting, local static server, or when explicitly configured
+    if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
+        console.log('🎵 Using GitHub Pages booking mode - redirecting to form submission');
+        
+        // For GitHub Pages, just submit the form normally (FormSubmit will handle it)
+        form.submit();
+        return;
+    }
+    
     try {
-        // Create payment intent
+        // Create payment intent (server mode only)
         const paymentResponse = await fetch('/create-payment-intent', {
             method: 'POST',
             headers: {
