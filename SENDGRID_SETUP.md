@@ -4,20 +4,20 @@
 
 1. **Login to SendGrid**
    - Go to [https://app.sendgrid.com/](https://app.sendgrid.com/)
-   - Login with your existing account (from DNS setup)
+   - Login with your existing account
 
 2. **Create API Key**
    - Navigate to Settings → API Keys
    - Click "Create API Key"
    - Choose "Full Access" for permissions
-   - Name it: `RemoteNotaryFL-API-Key`
+   - Name it: `MusicTutoring-API-Key`
    - **Copy the API key** - you'll need it for Azure
 
 ## Step 2: Set Up Environment Variables in Azure
 
 ### Option A: Using Azure Portal
 1. Go to [portal.azure.com](https://portal.azure.com)
-2. Navigate to your App Service: `RemoteNotaryFL`
+2. Navigate to your App Service: `music-tutoring-payments-free`
 3. Go to "Configuration" → "Application settings"
 4. Click "New application setting" and add these:
 
@@ -26,25 +26,28 @@ Name: SENDGRID_API_KEY
 Value: [Your SendGrid API Key from Step 1]
 
 Name: SENDGRID_FROM_EMAIL
-Value: noreply@yourdomain.com
+Value: mpdoor1@gmail.com
+
+Name: BUSINESS_EMAIL
+Value: mpdoor1@gmail.com
+
+Name: FROM_EMAIL
+Value: mpdoor1@gmail.com
 ```
 
 ### Option B: Using Azure CLI
 ```bash
 # Set SendGrid API Key
-az webapp config appsettings set --resource-group RemoteNotaryFL-rg --name RemoteNotaryFL --settings SENDGRID_API_KEY="your_api_key_here"
+az webapp config appsettings set --resource-group music-tutoring-rg --name music-tutoring-payments-free --settings SENDGRID_API_KEY="your_api_key_here"
 
 # Set From Email Address
-az webapp config appsettings set --resource-group RemoteNotaryFL-rg --name RemoteNotaryFL --settings SENDGRID_FROM_EMAIL="noreply@yourdomain.com"
+az webapp config appsettings set --resource-group music-tutoring-rg --name music-tutoring-payments-free --settings SENDGRID_FROM_EMAIL="mpdoor1@gmail.com"
+
+# Set Business Email
+az webapp config appsettings set --resource-group music-tutoring-rg --name music-tutoring-payments-free --settings BUSINESS_EMAIL="mpdoor1@gmail.com"
 ```
 
-## Step 3: Update Your Domain
-
-Replace `yourdomain.com` with your actual domain:
-- If your domain is `remotenotaryfl.com`, use `noreply@remotenotaryfl.com`
-- If your domain is `enotaryfl.com`, use `noreply@enotaryfl.com`
-
-## Step 4: Deploy Updated Code
+## Step 3: Deploy Updated Code
 
 Since you have GitHub Actions set up, the deployment will happen automatically when you push to main:
 
@@ -54,14 +57,14 @@ git commit -m "Add SendGrid API integration for email notifications"
 git push origin main
 ```
 
-## Step 5: Test Email Functionality
+## Step 4: Test Email Functionality
 
 1. **Wait for deployment** (check GitHub Actions tab)
-2. **Visit your website** at your custom domain
+2. **Visit your website** at https://mpdoor1.github.io/PrivateMusicTutoring
 3. **Make a test booking** to verify emails are sent
 4. **Check your email** for the confirmation
 
-## Step 6: Monitor Email Delivery
+## Step 5: Monitor Email Delivery
 
 ### SendGrid Dashboard
 - Go to SendGrid → Activity → Activity Feed
