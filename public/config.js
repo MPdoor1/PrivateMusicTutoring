@@ -48,7 +48,7 @@ const CONFIG = {
     // - Email automation
     // Consider deploying to Vercel, Netlify, or Heroku instead
     
-    IS_GITHUB_PAGES: true
+    IS_GITHUB_PAGES: false // Using Azure server instead
 };
 
 // Make config globally available

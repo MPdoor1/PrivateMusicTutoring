@@ -129,6 +129,16 @@ app.use((req, res, next) => {
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Test endpoint to verify server is working
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'Azure server is working!', 
+    timestamp: new Date().toISOString(),
+    stripe_configured: !!stripeSecretKey
+  });
+});
+
 // Initialize SendGrid
 const sendGridApiKey = process.env.SENDGRID_API_KEY;
 if (!sendGridApiKey) {

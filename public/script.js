@@ -386,19 +386,33 @@ async function processStripePayment(booking) {
         const isLocalStaticServer = window.location.port === '8000' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
         const isGitHubPagesHost = window.location.hostname.includes('github.io');
         
-        // Check if server endpoints are available (try to detect server mode)
-        const isNodeJSServer = window.location.port === '3000';
+        // Check if Azure server is configured
+        const hasAzureServer = config && config.SERVER_URL && config.SERVER_URL.includes('azurewebsites.net');
         
-        // Use GitHub Pages mode for: GitHub Pages hosting, local static server, or when explicitly configured
-        if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
+        // Use server mode if Azure server is available, otherwise fallback to GitHub Pages mode
+        if (hasAzureServer && !isGitHubPages) {
+            console.log('🚀 Using Azure server-side payment processing');
+            // Continue to server mode processing below
+        } else if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer) {
             console.log('🎵 Using GitHub Pages payment mode - static hosting detected');
             // GitHub Pages mode - use Stripe Payment Links or simplified flow
             return handleGitHubPagesPayment(booking);
         }
         
-        // Server mode - create payment intent (only when on port 3000)
-        console.log('🚀 Using server-side payment processing');
-        const response = await fetch('/create-payment-intent', {
+        // Server mode - create payment intent using Azure server
+        const serverUrl = config && config.SERVER_URL ? config.SERVER_URL : 'https://music-tutoring-payments-free.azurewebsites.net';
+        
+        console.log('🔗 Making request to:', `${serverUrl}/create-payment-intent`);
+        console.log('📦 Payment data:', {
+            amount: booking.price,
+            product_id: booking.productId,
+            service_name: booking.serviceName,
+            booking_id: booking.id,
+            promo_code: appliedPromoCode,
+            discount_percent: promoCodeDiscount
+        });
+        
+        const response = await fetch(`${serverUrl}/create-payment-intent`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -413,7 +427,11 @@ async function processStripePayment(booking) {
             })
         });
         
-        const { success, clientSecret, error } = await response.json();
+        console.log('📡 Response status:', response.status);
+        const responseData = await response.json();
+        console.log('📨 Response data:', responseData);
+        
+        const { success, clientSecret, error } = responseData;
         
         if (!success) {
             throw new Error(error || 'Failed to create payment intent');
@@ -437,7 +455,7 @@ async function processStripePayment(booking) {
         
         if (paymentIntent.status === 'succeeded') {
             // Confirm payment and create booking on server
-            const confirmResponse = await fetch('/confirm-payment', {
+            const confirmResponse = await fetch(`${serverUrl}/confirm-payment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -843,14 +861,17 @@ async function sendBookingConfirmationEmail(booking) {
     
     console.log('📧 Sending confirmation email to:', booking.email);
     
-    try {
-        const response = await fetch('/send-booking-confirmation', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(emailData)
-        });
+            try {
+            const config = window.MUSIC_TUTORING_CONFIG;
+            const serverUrl = config && config.SERVER_URL ? config.SERVER_URL : 'https://music-tutoring-payments-free.azurewebsites.net';
+            
+            const response = await fetch(`${serverUrl}/send-booking-confirmation`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(emailData)
+            });
         
         const result = await response.json();
         
@@ -880,14 +901,17 @@ async function sendMeetingLinkEmail(booking, meetingLink) {
     console.log('📧 Sending meeting link email to:', booking.email);
     console.log('Meeting link:', meetingLink);
     
-    try {
-        const response = await fetch('/send-meeting-link', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ bookingData, meetingLink })
-        });
+            try {
+            const config = window.MUSIC_TUTORING_CONFIG;
+            const serverUrl = config && config.SERVER_URL ? config.SERVER_URL : 'https://music-tutoring-payments-free.azurewebsites.net';
+            
+            const response = await fetch(`${serverUrl}/send-meeting-link`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ bookingData, meetingLink })
+            });
         
         const result = await response.json();
         
@@ -1284,10 +1308,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const isGitHubPages = config && config.IS_GITHUB_PAGES;
             const isLocalStaticServer = window.location.port === '8000' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
             const isGitHubPagesHost = window.location.hostname.includes('github.io');
-            const isNodeJSServer = window.location.port === '3000';
+            const hasAzureServer = config && config.SERVER_URL && config.SERVER_URL.includes('azurewebsites.net');
             
-            // Use GitHub Pages mode for: GitHub Pages hosting, local static server, or when explicitly configured
-            if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
+            // Use GitHub Pages mode only if explicitly configured or no Azure server
+            if ((isGitHubPages || isGitHubPagesHost || isLocalStaticServer) && !hasAzureServer) {
                 console.log('🎵 GitHub Pages mode detected - allowing normal form submission');
                 
                 // Validate required fields before allowing submission
@@ -1581,25 +1605,28 @@ async function sendMeetingLinkToBooking(bookingId) {
         return;
     }
     
-    try {
-        const response = await fetch('/send-meeting-link', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                bookingData: {
-                    email: booking.email,
-                    client_name: booking.name,
-                    booking_id: booking.id,
-                    appointment_date: formatBookingDate(booking.date),
-                    appointment_time: booking.time, // Use EST time for server processing
-                    service_type: booking.serviceType,
-                    service_name: booking.serviceName || booking.serviceType
+            try {
+            const config = window.MUSIC_TUTORING_CONFIG;
+            const serverUrl = config && config.SERVER_URL ? config.SERVER_URL : 'https://music-tutoring-payments-free.azurewebsites.net';
+            
+            const response = await fetch(`${serverUrl}/send-meeting-link`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                transactionId: booking.proofTransactionId || null
-            })
-        });
+                body: JSON.stringify({
+                    bookingData: {
+                        email: booking.email,
+                        client_name: booking.name,
+                        booking_id: booking.id,
+                        appointment_date: formatBookingDate(booking.date),
+                        appointment_time: booking.time, // Use EST time for server processing
+                        service_type: booking.serviceType,
+                        service_name: booking.serviceName || booking.serviceType
+                    },
+                    transactionId: booking.proofTransactionId || null
+                })
+            });
         
         const result = await response.json();
         
@@ -1934,10 +1961,10 @@ async function submitBookingForm(event) {
     const isGitHubPages = config && config.IS_GITHUB_PAGES;
     const isLocalStaticServer = window.location.port === '8000' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
     const isGitHubPagesHost = window.location.hostname.includes('github.io');
-    const isNodeJSServer = window.location.port === '3000';
+    const hasAzureServer = config && config.SERVER_URL && config.SERVER_URL.includes('azurewebsites.net');
     
-    // Use GitHub Pages mode for: GitHub Pages hosting, local static server, or when explicitly configured
-    if (isGitHubPages || isGitHubPagesHost || isLocalStaticServer || !isNodeJSServer) {
+    // Use GitHub Pages mode only if explicitly configured or no Azure server  
+    if ((isGitHubPages || isGitHubPagesHost || isLocalStaticServer) && !hasAzureServer) {
         console.log('🎵 Using GitHub Pages booking mode - redirecting to form submission');
         
         // For GitHub Pages, just submit the form normally (FormSubmit will handle it)
@@ -1947,7 +1974,10 @@ async function submitBookingForm(event) {
     
     try {
         // Create payment intent (server mode only)
-        const paymentResponse = await fetch('/create-payment-intent', {
+        const config = window.MUSIC_TUTORING_CONFIG;
+        const serverUrl = config && config.SERVER_URL ? config.SERVER_URL : 'https://music-tutoring-payments-free.azurewebsites.net';
+        
+        const paymentResponse = await fetch(`${serverUrl}/create-payment-intent`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
